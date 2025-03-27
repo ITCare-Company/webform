@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Form\AdminConfig;
 
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\webform\Element\WebformMessage;
@@ -232,7 +233,12 @@ class WebformAdminConfigLibrariesForm extends WebformAdminConfigBaseForm {
 
     // Reset libraries cache.
     // @see webform_library_info_build()
-    \Drupal::service('library.discovery')->clearCachedDefinitions();
+    DeprecationHelper::backwardsCompatibleCall(
+      currentVersion: \Drupal::VERSION,
+      deprecatedVersion: '11.1',
+      currentCallable: fn() => \Drupal::service('library.discovery')->clear(),
+      deprecatedCallable: fn() => \Drupal::service('library.discovery')->clearCachedDefinitions(),
+    );
   }
 
 }

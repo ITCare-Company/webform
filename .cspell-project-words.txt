@@ -175,6 +175,7 @@ Tfor
 Timepicker
 togglelink
 Traducción
+TRANSLIT
 Unarchives
 unflag
 unflagged
