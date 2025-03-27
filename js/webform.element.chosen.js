@@ -18,7 +18,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformChosen = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.chosen) {
         return;
       }

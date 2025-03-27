@@ -10,7 +10,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformClientSideValidationNoValidation = {
-    attach: function (context) {
+    attach(context) {
       $(once('webformClientSideValidationNoValidate', 'form[data-webform-clientside-validation-novalidate]', context))
         .each(function () {
           $(this).validate().destroy();

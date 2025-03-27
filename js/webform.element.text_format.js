@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformTextFormat = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-text-format', '.js-text-format-wrapper textarea', context)).each(function () {
         if (!window.CKEDITOR) {
           return;

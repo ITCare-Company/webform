@@ -17,7 +17,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformChoices = {
-    attach: function (context) {
+    attach(context) {
       if (!window.Choices) {
         return;
       }

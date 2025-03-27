@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformCounter = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.textcounter) {
         return;
       }

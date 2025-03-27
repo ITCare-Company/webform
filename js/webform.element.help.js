@@ -17,7 +17,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformElementHelpIcon = {
-    attach: function (context) {
+    attach(context) {
       if (!window.tippy) {
         return;
       }

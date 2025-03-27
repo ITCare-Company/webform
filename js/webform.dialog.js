@@ -33,7 +33,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformDialog = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-dialog', 'a.webform-dialog', context)).each(function () {
         var $a = $(this);
 

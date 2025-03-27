@@ -78,7 +78,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformInputMask = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.inputmask) {
         return;
       }

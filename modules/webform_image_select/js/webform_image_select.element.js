@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformImageSelect = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.imagepicker) {
         return;
       }

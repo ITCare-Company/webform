@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformElementStates = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-element-states-condition', '.webform-states-table--condition', context)).each(function () {
         var $condition = $(this);
         var $selector = $condition.find('.webform-states-table--selector select');

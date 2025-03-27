@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformSelectOptionsDisabled = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-select-options-disabled', 'select[data-webform-select-options-disabled]', context)).each(function () {
         var $select = $(this);
         var disabled = $select.attr('data-webform-select-options-disabled').split(/\s*,\s*/);

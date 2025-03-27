@@ -39,7 +39,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformMessageClose = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-message--close', '.js-webform-message--close', context)).each(function () {
         var $element = $(this);
 

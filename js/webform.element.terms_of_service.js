@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformTermsOfService = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-terms-of-service', '.js-form-type-webform-terms-of-service', context)).each(function () {
         var $element = $(this);
         var $a = $element.find('label a');

@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformRangeOutputNumber = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-range-output-number', '.js-form-type-range', context)).each(function () {
         var $element = $(this);
         var $input = $element.find('input[type="range"]');
@@ -43,7 +43,7 @@
    * @see https://stackoverflow.com/questions/33794123/absolute-positioning-in-relation-to-a-inputtype-range
    */
   Drupal.behaviors.webformRangeOutputBubble = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-range-output-bubble', '.js-form-type-range', context)).each(function () {
         var $element = $(this);
         var $input = $element.find('input[type="range"]');

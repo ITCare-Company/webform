@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformConfirmationModal = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-confirmation-modal', '.js-webform-confirmation-modal', context)).each(function () {
         var $element = $(this);
 

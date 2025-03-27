@@ -31,7 +31,7 @@ if (!jQuery.trim) {
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformSelect2 = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.select2) {
         return;
       }

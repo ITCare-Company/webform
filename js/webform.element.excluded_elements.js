@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformExcludedElementsComposite = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-excluded-elements', '.form-type-webform-excluded-elements [data-composite] input[type="checkbox"]'))
         .on('click', function () {
           var checked = this.checked;

@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformCards = {
-    attach: function (context) {
+    attach(context) {
       // Determine if the form is the context or it is within the context.
       var $forms = $(context).is('form.webform-submission-form')
         ? $(context)

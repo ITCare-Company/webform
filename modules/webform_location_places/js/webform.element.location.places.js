@@ -31,7 +31,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformLocationPlaces = {
-    attach: function (context) {
+    attach(context) {
       if (!window.places) {
         return;
       }

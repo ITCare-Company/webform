@@ -17,7 +17,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformComputed = {
-    attach: function (context) {
+    attach(context) {
       // Find computed elements and build trigger selectors.
       $(once('webform-computed', '.js-webform-computed', context)).each(function () {
         // Get computed element and form.

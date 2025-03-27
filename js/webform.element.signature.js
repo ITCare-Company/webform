@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformSignature = {
-    attach: function (context) {
+    attach(context) {
       if (!window.SignaturePad) {
         return;
       }

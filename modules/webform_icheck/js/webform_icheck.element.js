@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformICheck = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.iCheck) {
         return;
       }
@@ -62,7 +62,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformICheckTableSelectAll = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.iCheck) {
         return;
       }

@@ -25,7 +25,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformDetailsSave = {
-    attach: function (context) {
+    attach(context) {
       if (!hasLocalStorage) {
         return;
       }

@@ -21,7 +21,7 @@
    * @see \Drupal\webform\Utility\WebformFormHelper::buildTabs
    */
   Drupal.behaviors.webformFormTabs = {
-    attach: function (context) {
+    attach(context) {
       if (!window.Tabby) {
         return;
       }

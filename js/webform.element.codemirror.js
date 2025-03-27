@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformCodeMirror = {
-    attach: function (context) {
+    attach(context) {
       if (!window.CodeMirror) {
         return;
       }

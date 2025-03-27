@@ -14,7 +14,7 @@
    *   Attaches the behavior for disabling help dialog for mobile devices.
    */
   Drupal.behaviors.webformHelpDialog = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-help-dialog', '.button-webform-play', context)).on('click', function (event) {
         if ($(window).width() < 768) {
           event.stopImmediatePropagation();

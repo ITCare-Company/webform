@@ -35,7 +35,7 @@
    *   Attaches the behavior for the block settings summaries.
    */
   Drupal.behaviors.webformOptionsCustom = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-options-custom', '.js-webform-options-custom', context)).each(function () {
         var $element = $(this);
         var $select = $element.find('select');

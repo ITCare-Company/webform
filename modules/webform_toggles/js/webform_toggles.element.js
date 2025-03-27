@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformToggle = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.toggles) {
         return;
       }

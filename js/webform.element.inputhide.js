@@ -13,7 +13,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformInputHide = {
-    attach: function (context) {
+    attach(context) {
       // Apply chrome fix to prevent password input from being autofilled.
       // @see https://stackoverflow.com/questions/15738259/disabling-chrome-autofill
       if (isChrome) {

@@ -21,7 +21,7 @@
    *   Attaches the behavior to [data-webform-announce] attribute.
    */
   Drupal.behaviors.webformAnnounce = {
-    attach: function (context) {
+    attach(context) {
       $(once('data-webform-announce', '[data-webform-announce]', context)).each(function () {
         Drupal.announce($(this).data('webform-announce'));
       });

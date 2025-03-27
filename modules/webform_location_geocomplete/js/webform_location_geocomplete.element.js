@@ -17,7 +17,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformLocationGeocomplete = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.geocomplete) {
         return;
       }

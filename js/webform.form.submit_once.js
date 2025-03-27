@@ -20,7 +20,7 @@
       $form.find('.js-webform-wizard-pages-links :submit, .form-actions :submit').removeClass('is-disabled');
       $form.find('.form-actions .ajax-progress.ajax-progress-throbber').remove();
     },
-    attach: function (context) {
+    attach(context) {
       $(once('webform-submit-once', '.js-webform-submit-once', context)).each(function () {
         var $form = $(this);
         // Remove data-webform-submitted.

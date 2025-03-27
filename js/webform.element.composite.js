@@ -11,7 +11,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformElementComposite = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-composite-types', '[data-composite-types]')).each(function () {
         var $element = $(this);
         var $type = $element.closest('tr').find('.js-webform-composite-type');

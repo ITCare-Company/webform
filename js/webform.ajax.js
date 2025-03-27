@@ -27,7 +27,7 @@
    *   Attaches the behavior to a.webform-ajax-link.
    */
   Drupal.behaviors.webformAjaxLink = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-ajax-link', '.webform-ajax-link', context)).each(function () {
         var element_settings = {};
         element_settings.progress = {type: 'fullscreen'};
@@ -68,7 +68,7 @@
    * @see Drupal.behaviors.webformFormTabs
    */
   Drupal.behaviors.webformAjaxHash = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-ajax-hash', '[data-hash]', context)).each(function () {
         var hash = $(this).data('hash');
         if (hash) {
@@ -89,7 +89,7 @@
    *   Attaches the behavior to confirmation back to link.
    */
   Drupal.behaviors.webformConfirmationBackAjax = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-confirmation-back-ajax', '.js-webform-confirmation-back-link-ajax', context))
         .on('click', function (event) {
           var $form = $(this).parents('form');

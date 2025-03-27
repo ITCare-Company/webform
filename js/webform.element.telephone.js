@@ -16,7 +16,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformTelephoneInternational = {
-    attach: function (context) {
+    attach(context) {
       if (!$.fn.intlTelInput) {
         return;
       }

@@ -14,7 +14,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformRating = {
-    attach: function (context) {
+    attach(context) {
       $(once('webform-rating', '[data-rateit-backingfld]', context))
         .each(function () {
           var $rateit = $(this);
