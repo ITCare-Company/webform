@@ -42,7 +42,7 @@
           var $clickedButton = $form.find('.js-webform-wizard-pages-links :submit.js-webform-submit-clicked, .form-actions :submit.js-webform-submit-clicked');
 
           // Don't submit if client-side validation has failed.
-          if (!$clickedButton.attr('formnovalidate') && $.isFunction(jQuery.fn.valid) && !($form.valid())) {
+          if (!$clickedButton.attr('formnovalidate') && (typeof jQuery.fn.valid === 'function') && !($form.valid())) {
             return false;
           }
 
