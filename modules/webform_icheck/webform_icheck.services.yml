@@ -1,5 +1,0 @@
-
-services:
-  Drupal\webform_icheck\Hook\WebformIcheckHooks:
-    class: Drupal\webform_icheck\Hook\WebformIcheckHooks
-    autowire: true
