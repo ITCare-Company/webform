@@ -64,8 +64,7 @@ class WebformEntitySettingsFormForm extends WebformEntitySettingsBaseForm {
 
     // @see \Drupal\webform\Plugin\Field\FieldWidget\WebformEntityReferenceAutocompleteWidget::formElement
     $form['form_settings']['scheduled'] = [
-      '#type' => 'item',
-      '#input' => FALSE,
+      '#type' => 'fieldgroup',
       '#states' => [
         'visible' => [
           ':input[name="status"]' => ['value' => WebformInterface::STATUS_SCHEDULED],
