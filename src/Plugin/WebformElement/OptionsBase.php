@@ -164,32 +164,16 @@ abstract class OptionsBase extends WebformElementBase {
       $has_description = (!empty($element['#description'])) ? TRUE : FALSE;
       if ($is_description_display && $has_description) {
         $description = WebformElementHelper::convertToString($element['#description']);
-        switch ($element['#description_display']) {
-          case 'before':
-            $element += ['#field_prefix' => ''];
-            $element['#field_prefix'] = '<div class="description">' . $description . '</div>' . $element['#field_prefix'];
-            unset($element['#description']);
-            unset($element['#description_display']);
-            break;
-
-          case 'tooltip':
-            $element += ['#field_suffix' => ''];
-            $element['#field_suffix'] .= '<div class="description visually-hidden">' . $description . '</div>';
-            // @see \Drupal\Core\Render\Element\CompositeFormElementTrait
-            // @see \Drupal\webform\Plugin\WebformElementBase::prepare
-            $element['#attributes']['class'][] = 'js-webform-tooltip-element';
-            $element['#attributes']['class'][] = 'webform-tooltip-element';
-            $element['#attached']['library'][] = 'webform/webform.tooltip';
-            unset($element['#description']);
-            unset($element['#description_display']);
-            break;
-
-          case 'invisible':
-            $element += ['#field_suffix' => ''];
-            $element['#field_suffix'] .= '<div class="description visually-hidden">' . $description . '</div>';
-            unset($element['#description']);
-            unset($element['#description_display']);
-            break;
+        if ($element['#description_display'] === 'tooltip') {
+          $element += ['#field_suffix' => ''];
+          $element['#field_suffix'] .= '<div class="description visually-hidden">' . $description . '</div>';
+          // @see \Drupal\Core\Render\Element\CompositeFormElementTrait
+          // @see \Drupal\webform\Plugin\WebformElementBase::prepare
+          $element['#attributes']['class'][] = 'js-webform-tooltip-element';
+          $element['#attributes']['class'][] = 'webform-tooltip-element';
+          $element['#attached']['library'][] = 'webform/webform.tooltip';
+          unset($element['#description']);
+          unset($element['#description_display']);
         }
       }
     }
