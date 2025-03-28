@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   /**
    * Handles disabling help dialog for mobile devices.
    *

@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   var isChrome = (/chrom(e|ium)/.test(window.navigator.userAgent.toLowerCase()));
 
   /**

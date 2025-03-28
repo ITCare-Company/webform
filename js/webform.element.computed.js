@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.computed = Drupal.webform.computed || {};
   Drupal.webform.computed.delay = Drupal.webform.computed.delay || 500;

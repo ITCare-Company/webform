@@ -5,6 +5,8 @@
 
 (function ($, Drupal, drupalSettings, once) {
 
+  'use strict';
+
   /**
    * Element #states builder.
    *

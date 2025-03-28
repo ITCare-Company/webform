@@ -5,6 +5,8 @@
 
 (function ($, Drupal) {
 
+  'use strict';
+
   /**
    * Autofocus first input.
    *

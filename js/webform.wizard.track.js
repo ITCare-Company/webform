@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   /**
    * Tracks the wizard's current page in the URL.
    *

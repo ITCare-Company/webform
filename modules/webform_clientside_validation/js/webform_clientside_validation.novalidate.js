@@ -4,6 +4,8 @@
  */
 (function ($, Drupal, once) {
 
+  'use strict';
+
   /**
    * Disable clientside validation for webforms.
    *

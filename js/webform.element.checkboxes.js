@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   /**
    * Adds check all or none checkboxes support.
    *

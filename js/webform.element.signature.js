@@ -5,6 +5,8 @@
 
 (function ($, Drupal, debounce, once) {
 
+  'use strict';
+
   // @see https://github.com/szimek/signature_pad#options
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.signaturePad = Drupal.webform.signaturePad || {};

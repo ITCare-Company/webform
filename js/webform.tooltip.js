@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   var tooltipDefaultOptions = {
     delay: 100
   };

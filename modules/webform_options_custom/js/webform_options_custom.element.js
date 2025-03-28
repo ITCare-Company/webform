@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   Drupal.webformOptionsCustom = Drupal.webformOptionsCustom || {};
 
   // @see http://api.jqueryui.com/tooltip/

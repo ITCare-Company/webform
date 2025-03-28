@@ -5,6 +5,8 @@
 
 (function ($, Drupal, once) {
 
+  'use strict';
+
   Drupal.webform = Drupal.webform || {};
   Drupal.webform.detailsToggle = Drupal.webform.detailsToggle || {};
   Drupal.webform.detailsToggle.options = Drupal.webform.detailsToggle.options || {};
