@@ -351,7 +351,7 @@ webform.form:
 webform.form.auto_focus:
   header: true
   js:
-    js/webform.form.auto_focus.js: { preprocess: false }
+    js/webform.form.auto_focus.js: { preprocess: false, minified: true }
   dependencies:
     - core/drupal
     - core/jquery
@@ -359,12 +359,12 @@ webform.form.auto_focus:
 webform.form.disable_back:
   header: true
   js:
-    js/webform.form.disable_back.js: { preprocess: false }
+    js/webform.form.disable_back.js: { preprocess: false, minified: true }
 
 webform.form.submit_back:
   header: true
   js:
-    js/webform.form.submit_back.js: { preprocess: false }
+    js/webform.form.submit_back.js: { preprocess: false, minified: true }
   dependencies:
     - core/jquery
 
