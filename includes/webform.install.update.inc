@@ -4320,7 +4320,6 @@ function webform_update_8638() {
     ->load('authenticated');
   if ($filter_format && !$role->hasPermission('use text format webform_default')) {
     $role->grantPermission('use text format webform_default');
-    var_export($role->toArray());
     $role->save();
   }
 }
