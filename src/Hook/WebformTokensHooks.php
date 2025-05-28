@@ -202,7 +202,27 @@ class WebformTokensHooks {
     ];
     $webform_submission['values'] = [
       'name' => $this->t('Submission values'),
-      'description' => Markup::create(t('Webform tokens from submitted data.') . _webform_token_render_more(t('Learn about submission value tokens'), $this->t("Omit the '?' to output all values. Output all values as HTML using [webform_submission:values:html].") . '<br />' . $this->t("To output individual elements, replace the '?' with…") . '<br />' . '<ul>' . '<li>element_key</li>' . '<li>element_key:format</li>' . '<li>element_key:raw</li>' . '<li>element_key:format:items</li>' . '<li>element_key:delta</li>' . '<li>element_key:sub_element_key</li>' . '<li>element_key:delta:sub_element_key</li>' . '<li>element_key:sub_element_key:format</li>' . '<li>element_key:delta:sub_element_key:format</li>' . '<li>element_key:delta:format</li>' . '<li>element_key:delta:format:html</li>' . '<li>element_key:entity:*</li>' . '<li>element_key:delta:entity:*</li>' . '<li>element_key:delta:entity:field_name:*</li>' . '<li>element_key:sub_element_key:entity:*</li>' . '<li>element_key:sub_element_key:entity:field_name:*</li>' . '<li>element_key:delta:sub_element_key:entity:*</li>' . '<li>element_key:checked:option_value</li>' . '<li>element_key:selected:option_value</li>' . '</ul>' . $this->t("All items after the 'element_key' are optional.") . '<br />' . $this->t("The 'delta' is the numeric index for specific value") . '<br />' . $this->t("The 'sub_element_key' is a composite element's sub element key.") . '<br />' . $this->t("The 'checked'  or 'selected' looks to see if an 'option_value' is checked or selected for an options element (select, checkboxes, or radios)") . '<br />' . $this->t("The 'option_value' is options value for an options element (select, checkboxes, or radios).") . '<br />' . $this->t("The 'format' can be 'value', 'raw', or custom format specifically associated with the element") . '<br />' . $this->t("The 'items' can be 'comma', 'semicolon', 'and', 'ol', 'ul', or custom delimiter") . '<br />' . $this->t("The 'entity:*' applies to the referenced entity") . '<br />' . $this->t("Add 'html' at the end of the token to return HTML markup instead of plain text.") . '<br />' . $this->t("For example, to display the Contact webform's 'Subject' element's value you would use the [webform_submission:values:subject] token."))),
+      'description' => Markup::create(t('Webform tokens from submitted data.') . _webform_token_render_more(t('Learn about submission value tokens'), $this->t("Omit the '?' to output all values. Output all values as HTML using [webform_submission:values:html].") . '<br />' . $this->t("To output individual elements, replace the '?' with…") . '<br /><ul>' .
+          '<li>element_key</li>' .
+          '<li>element_key:format</li>' .
+          '<li>element_key:raw</li>' .
+          '<li>element_key:format:items</li>' .
+          '<li>element_key:delta</li>' .
+          '<li>element_key:sub_element_key</li>' .
+          '<li>element_key:delta:sub_element_key</li>' .
+          '<li>element_key:sub_element_key:format</li>' .
+          '<li>element_key:delta:sub_element_key:format</li>' .
+          '<li>element_key:delta:format</li>' .
+          '<li>element_key:delta:format:html</li>' .
+          '<li>element_key:entity:*</li>' .
+          '<li>element_key:delta:entity:*</li>' .
+          '<li>element_key:delta:entity:field_name:*</li>' .
+          '<li>element_key:sub_element_key:entity:*</li>' .
+          '<li>element_key:sub_element_key:entity:field_name:*</li>' .
+          '<li>element_key:delta:sub_element_key:entity:*</li>' .
+          '<li>element_key:checked:option_value</li>' .
+          '<li>element_key:selected:option_value</li>' .
+        '</ul>' . $this->t("All items after the 'element_key' are optional.") . '<br />' . $this->t("The 'delta' is the numeric index for specific value") . '<br />' . $this->t("The 'sub_element_key' is a composite element's sub element key.") . '<br />' . $this->t("The 'checked'  or 'selected' looks to see if an 'option_value' is checked or selected for an options element (select, checkboxes, or radios)") . '<br />' . $this->t("The 'option_value' is options value for an options element (select, checkboxes, or radios).") . '<br />' . $this->t("The 'format' can be 'value', 'raw', or custom format specifically associated with the element") . '<br />' . $this->t("The 'items' can be 'comma', 'semicolon', 'and', 'ol', 'ul', or custom delimiter") . '<br />' . $this->t("The 'entity:*' applies to the referenced entity") . '<br />' . $this->t("Add 'html' at the end of the token to return HTML markup instead of plain text.") . '<br />' . $this->t("For example, to display the Contact webform's 'Subject' element's value you would use the [webform_submission:values:subject] token."))),
       'dynamic' => TRUE,
     ];
     // Chained tokens for webform submissions.
@@ -289,17 +309,30 @@ class WebformTokensHooks {
     ];
     $webform['settings'] = [
       'name' => $this->t('Settings'),
-      'description' => Markup::create(t('Webform settings tokens.') . _webform_token_render_more(t('Learn about Webform settings tokens'), '<ul>' . '<li>confirmation_title</li>' . '<li>confirmation_message</li>' . '<li>form_open_message</li>' . '<li>form_close_message</li>' . '</ul>')),
+      'description' => Markup::create(t('Webform settings tokens.') . _webform_token_render_more(t('Learn about Webform settings tokens'), '<ul>' .
+        '<li>confirmation_title</li>' .
+        '<li>confirmation_message</li>' .
+        '<li>form_open_message</li>' .
+        '<li>form_close_message</li>' .
+      '</ul>')),
       'dynamic' => TRUE,
     ];
     $webform['element'] = [
       'name' => $this->t('Element properties'),
-      'description' => Markup::create(t('Webform element property tokens.') . _webform_token_render_more(t('Learn about element property tokens'), $this->t("Replace the '?' with…") . '<br />' . '<ul>' . '<li>element_key:title</li>' . '<li>element_key:description</li>' . '<li>element_key:help</li>' . '<li>element_key:more</li>' . '</ul>' . $this->t("For example, to display an email element's title (aka #title) you would use the [webform:element:email:title] token."))),
+      'description' => Markup::create(t('Webform element property tokens.') . _webform_token_render_more(t('Learn about element property tokens'), $this->t("Replace the '?' with…") . '<br /><ul>' .
+        '<li>element_key:title</li>' .
+        '<li>element_key:description</li>' .
+        '<li>element_key:help</li>' .
+        '<li>element_key:more</li>' .
+      '</ul>' . $this->t("For example, to display an email element's title (aka #title) you would use the [webform:element:email:title] token."))),
       'dynamic' => TRUE,
     ];
     $webform['handler'] = [
       'name' => $this->t('Handler response'),
-      'description' => Markup::create(t('Webform handler response tokens.') . _webform_token_render_more(t('Learn about handler response tokens'), $this->t("Replace the '?' with…") . '<br />' . '<ul>' . '<li>handler_id:state:key</li>' . '<li>handler_id:state:key1:key2</li>' . '</ul>' . $this->t("For example, to display a remote post's confirmation number you would use the [webform:handler:remote_post:completed:confirmation_number] token."))),
+      'description' => Markup::create(t('Webform handler response tokens.') . _webform_token_render_more(t('Learn about handler response tokens'), $this->t("Replace the '?' with…") . '<br /><ul>' .
+        '<li>handler_id:state:key</li>' .
+        '<li>handler_id:state:key1:key2</li>' .
+      '</ul>' . $this->t("For example, to display a remote post's confirmation number you would use the [webform:handler:remote_post:completed:confirmation_number] token."))),
       'dynamic' => TRUE,
     ];
     $tokens['webform'] = $webform;

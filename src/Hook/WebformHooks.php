@@ -270,7 +270,15 @@ class WebformHooks {
     // Append learn more about token suffixes to all webform token descriptions.
     // @see \Drupal\webform\WebformTokenManager::replace
     // @see webform_page_attachments()
-    $token_suffixes = $this->t('Append the below suffixes to alter the returned value.') . '<ul>' . '<li>' . $this->t('<code>:base64encode</code> base64 encodes returned value') . '</li>' . '<li>' . $this->t('<code>:clear</code> removes the token when it is not replaced.') . '</li>' . '<li>' . $this->t('<code>:urlencode</code> URL encodes returned value.') . '</li>' . '<li>' . $this->t('<code>:rawurlencode</code> Raw URL encodes returned value with only hex digits.') . '</li>' . '<li>' . $this->t('<code>:xmlencode</code> XML encodes returned value.') . '</li>' . '<li>' . $this->t('<code>:htmldecode</code> decodes HTML entities in returned value.') . '<br/><b>' . $this->t('This suffix has security implications.') . '</b><br/>' . $this->t('Use <code>:htmldecode</code> with <code>:striptags</code>.') . '</li>' . '<li>' . $this->t('<code>:striptags</code> removes all HTML tags from returned value.') . '</li>' . '</ul>';
+    $token_suffixes = $this->t('Append the below suffixes to alter the returned value.') . '<ul>' .
+      '<li>' . $this->t('<code>:base64encode</code> base64 encodes returned value') . '</li>' .
+      '<li>' . $this->t('<code>:clear</code> removes the token when it is not replaced.') . '</li>' .
+      '<li>' . $this->t('<code>:urlencode</code> URL encodes returned value.') . '</li>' .
+      '<li>' . $this->t('<code>:rawurlencode</code> Raw URL encodes returned value with only hex digits.') . '</li>' .
+      '<li>' . $this->t('<code>:xmlencode</code> XML encodes returned value.') . '</li>' .
+      '<li>' . $this->t('<code>:htmldecode</code> decodes HTML entities in returned value.') . '<br/><b>' . $this->t('This suffix has security implications.') . '</b><br/>' . $this->t('Use <code>:htmldecode</code> with <code>:striptags</code>.') . '</li>' .
+      '<li>' . $this->t('<code>:striptags</code> removes all HTML tags from returned value.') . '</li>' .
+    '</ul>';
     $more = _webform_token_render_more(t('Learn about token suffixes'), $token_suffixes);
     foreach ($data['types'] as $type => &$info) {
       if (strpos($type, 'webform') === 0) {
