@@ -36,11 +36,11 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 abstract class WebformManagedFileBase extends WebformElementBase implements WebformElementAttachmentInterface, WebformElementEntityReferenceInterface, WebformElementFileDownloadAccessInterface {
 
   /**
-   * List of blacklisted mime types that must be downloaded.
+   * List of mime types that must be downloaded.
    *
    * @var array
    */
-  protected static $blacklistedMimeTypes = [
+  protected static $downloadMimeTypes = [
     'application/pdf',
     'application/xml',
     'image/svg+xml',
@@ -1387,8 +1387,8 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
       // Remove other characters not removed by Transliteration.
       $illegal_characters = '/[%#&{}\<>*?\/ $!\'":@+`|=]/';
       $filename_fallback = preg_replace($illegal_characters, '', $filename_fallback);
-      // Force blacklisted files to be downloaded instead of opening in the browser.
-      if (in_array($headers['Content-Type'], static::$blacklistedMimeTypes)) {
+      // Force some files to be downloaded instead of opening in the browser.
+      if (in_array($headers['Content-Type'], static::$downloadMimeTypes)) {
         $headers['Content-Disposition'] = HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, (string) $filename, $filename_fallback);
       }
       else {
