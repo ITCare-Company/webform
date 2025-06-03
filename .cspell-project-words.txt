@@ -190,3 +190,5 @@ wfdcu
 wfdr
 wfro
 wfsec
+whitelist
+whitelisted
