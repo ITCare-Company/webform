@@ -54,7 +54,7 @@ class WebformElementHelper {
   ];
 
   /**
-   * Allowed (whitelist) element properties.
+   * Allowed element properties.
    *
    * @var array
    */
