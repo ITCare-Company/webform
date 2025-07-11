@@ -26,6 +26,8 @@ block.settings.webform_block:
     lazy:
       type: boolean
       label: 'Use lazy builder'
+  constraints:
+    FullyValidatable: ~
 block.settings.webform_submission_limit_block:
   type: block_settings
   label: 'Webform submission limits block'
