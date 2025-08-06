@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\Core\Hook\Attribute\LegacyModuleImplementsAlter;
 use Drupal\webform\Hook\WebformHooks;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\Cache;
@@ -134,6 +135,7 @@ function webform_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableD
 /**
  * Implements hook_module_implements_alter().
  */
+#[LegacyModuleImplementsAlter]
 function webform_module_implements_alter(&$implementations, $hook) {
   if ($hook === 'form_alter') {
     $implementation = $implementations['webform'];
