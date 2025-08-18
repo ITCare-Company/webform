@@ -203,14 +203,8 @@ class WebformScheduledEmailTest extends WebformNodeBrowserTestBase {
     $yesterday_handler = $webform_schedule->getHandler('yesterday');
     $conditions = ['enabled' => [':input[name="value"]' => ['filled' => TRUE]]];
     $yesterday_handler->setConditions($conditions);
-    // NOTE: Executing $webform_schedule->save() throws the below
-    // unexplainable error.
-    //
-    // TypeError: Argument 1 passed to
-    // Drupal\webform\WebformSubmissionConditionsValidator::validateConditions()
-    // must be of the type array, null given
-    // $webform_schedule->save() ;
-    //
+    $webform_schedule->save();
+
     // Check that 3 yesterday scheduled emails are skipped and removed.
     $stats = $scheduled_manager->cron();
     $this->assertEquals($stats['skipped'], 3);

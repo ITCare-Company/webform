@@ -24,7 +24,13 @@ class WebformElementValidateRequiredTest extends WebformElementBrowserTestBase {
 
     // Check that HTML tags are stripped  from required error attribute.
     $this->drupalGet('/webform/test_element_validate_required');
-    $assert_session->responseContains('<input data-webform-required-error="This is a custom required message" data-drupal-selector="edit-required-error-textfield" type="text" id="edit-required-error-textfield" name="required_error_textfield" value="" size="60" maxlength="255" class="form-text required" required="required" aria-required="true" />');
+    if (version_compare(\Drupal::VERSION, '11', '<')) {
+      $assert_session->responseContains('<input data-webform-required-error="This is a custom required message" data-drupal-selector="edit-required-error-textfield" type="text" id="edit-required-error-textfield" name="required_error_textfield" value="" size="60" maxlength="255" class="form-text required" required="required" aria-required="true" />');
+    }
+    else {
+      $assert_session->responseContains('<input data-webform-required-error="This is a custom required message" data-drupal-selector="edit-required-error-textfield" type="text" id="edit-required-error-textfield" name="required_error_textfield" value="" size="60" maxlength="255" class="form-text required" required="required" />');
+
+    }
 
     // Check that HTML tags are rendered in validation message.
     $this->drupalGet('/webform/test_element_validate_required');
