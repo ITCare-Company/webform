@@ -25,7 +25,9 @@
         var $dialog = $element.find('.webform-confirmation-modal--content');
 
         var options = {
-          dialogClass: 'webform-confirmation-modal',
+          classes: {
+            'ui-dialog': 'webform-confirmation-modal',
+          },
           minWidth: 600,
           resizable: false,
           title: $element.find('.webform-confirmation-modal--title').text(),
