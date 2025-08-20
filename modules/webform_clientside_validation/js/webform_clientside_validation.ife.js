@@ -60,6 +60,9 @@
 
       // Add '.form-item--error-message' class to all errors.
       $(this.currentForm).find('strong.error').addClass('form-item--error-message');
+      // All errors should have role alert for better accessibility.
+      // @see https://www.w3.org/TR/WCAG20-TECHS/ARIA19.html
+      $(this.currentForm).find('strong.error').attr('role', 'alert');
 
       // Move all radios, checkboxes, and datelist errors to appear after
       // the parent container.
