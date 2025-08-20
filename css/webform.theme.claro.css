@@ -197,23 +197,6 @@ table.webform-states-table
 }
 
 /*****************************************************************************   */
-/* Form */
-/*****************************************************************************   */
-
-/**
- * Fix checkbox via dialog/off-canvas tray.
- *
- * @see claro/css/src/components/form--checkbox-radio.css
- */
-.ui-dialog .form-type--boolean .form-boolean {
-  position: inherit;
-  inset-block-start: inherit;
-  float: none; /* LTR */
-  margin-inline-start: inherit;
-  transform: none;
-}
-
-/*****************************************************************************   */
 /* Filter */
 /*****************************************************************************   */
 
