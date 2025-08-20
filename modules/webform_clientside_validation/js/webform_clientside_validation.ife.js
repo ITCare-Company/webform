@@ -119,11 +119,19 @@
       });
 
       // Add custom clear error handling to checkboxes to remove the
-      // error message, when any checkbox is checked.
+      // error message and .error class from checkboxes,
+      // when any checkbox is checked.
       $(once('webform-clientside-validation-form-checkboxes', '.form-checkboxes', this.currentForm)).each(function () {
         var $container = $(this);
         $container.find('input:checkbox').click( function () {
-          var state = $container.find('input:checkbox:checked').length ? 'hide' : 'show';
+          var isChecked = $container.find('input:checkbox:checked').length;
+
+          // If checked, then remove the `.error` class from all checkboxes.
+          if (isChecked) {
+            $container.find('input:checkbox').removeClass('error');
+          }
+
+          var state = isChecked ? 'hide' : 'show';
           var $message = $container.next('strong.error.form-item--error-message');
           $message[state]();
 
