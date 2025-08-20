@@ -827,7 +827,7 @@ abstract class OptionsBase extends WebformElementBase {
 
         if ($this->hasMultipleValues($element)) {
           // Return array of valid #options.
-          return array_intersect($value, array_keys($options));
+          return array_intersect($value ?? [], array_keys($options));
         }
         else {
           // Return valid #option.
