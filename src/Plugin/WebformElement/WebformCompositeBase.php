@@ -209,7 +209,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         // Transfer '#{composite_key}_{property}' from main element to composite
         // element.
         foreach ($element as $property_key => $property_value) {
-          if (strpos($property_key, '#' . $composite_key . '__') === 0) {
+          if (str_starts_with($property_key, '#' . $composite_key . '__')) {
             $composite_property_key = str_replace('#' . $composite_key . '__', '#', $property_key);
             $composite_element[$composite_property_key] = $property_value;
           }
@@ -1353,7 +1353,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
     $webform_options = WebformOptions::loadMultiple();
     $options = [];
     foreach ($webform_options as $key => $webform_option) {
-      if (strpos($key, $composite_key) === 0) {
+      if (str_starts_with($key, $composite_key)) {
         $options[$key] = $webform_option->label();
       }
     }

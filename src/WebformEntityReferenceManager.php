@@ -110,8 +110,8 @@ class WebformEntityReferenceManager implements WebformEntityReferenceManagerInte
       "entity.$entity_type.webform.api_form",
     ];
     return in_array($this->routeMatch->getRouteName(), $user_routes)
-      || (strpos($route_name, "entity.$entity_type.webform.results_") === 0)
-      || (strpos($route_name, "entity.$entity_type.webform.share_") === 0);
+      || (str_starts_with($route_name, "entity.$entity_type.webform.results_"))
+      || (str_starts_with($route_name, "entity.$entity_type.webform.share_"));
   }
 
   /**

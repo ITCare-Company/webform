@@ -753,7 +753,7 @@ class WebformTokensHooks {
       }
       if ($element_tokens = $token_service->findWithPrefix($tokens, 'element')) {
         foreach ($element_tokens as $key => $original) {
-          if (strpos($key, ':') === FALSE) {
+          if (!str_contains($key, ':')) {
             $element_key = $key;
             $element_property = 'title';
           }

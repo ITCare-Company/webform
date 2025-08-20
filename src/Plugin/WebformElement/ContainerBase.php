@@ -218,7 +218,7 @@ abstract class ContainerBase extends WebformElementBase {
 
     // Parse children from template and children to context.
     $template = trim($element['#format_' . $name]);
-    if (strpos($template, 'children') !== FALSE) {
+    if (str_contains($template, 'children')) {
       /** @var \Drupal\webform\WebformSubmissionViewBuilderInterface $view_builder */
       $view_builder = $this->entityTypeManager->getViewBuilder('webform_submission');
       $context['children'] = $view_builder->buildElements($element, $webform_submission, $options, $name);

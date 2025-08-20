@@ -86,7 +86,7 @@ abstract class OptionsBase extends WebformElementBase {
    */
   public function isMultiline(array $element) {
     $items_format = $this->getItemsFormat($element);
-    if (strpos($items_format, 'checklist:') === 0) {
+    if (str_starts_with($items_format, 'checklist:')) {
       return TRUE;
     }
     else {
@@ -443,7 +443,7 @@ abstract class OptionsBase extends WebformElementBase {
    */
   protected function formatHtmlItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $format = $this->getItemsFormat($element);
-    if (strpos($format, 'checklist:') === 0) {
+    if (str_starts_with($format, 'checklist:')) {
       // Get checked/unchecked icons.
       [, $checked_type] = explode(':', $format);
       switch ($checked_type) {
@@ -497,7 +497,7 @@ abstract class OptionsBase extends WebformElementBase {
    */
   protected function formatTextItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $format = $this->getItemsFormat($element);
-    if (strpos($format, 'checklist:') === 0) {
+    if (str_starts_with($format, 'checklist:')) {
       // Get checked/unchecked icons.
       [, $checked_type] = explode(':', $format);
       switch ($checked_type) {
@@ -762,7 +762,7 @@ abstract class OptionsBase extends WebformElementBase {
       return [$title => $selectors];
     }
     else {
-      $multiple = ($this->hasMultipleValues($element) && strpos($plugin_id, 'select') !== FALSE) ? '[]' : '';
+      $multiple = ($this->hasMultipleValues($element) && str_contains($plugin_id, 'select')) ? '[]' : '';
       return [":input[name=\"$name$multiple\"]" => $title];
     }
   }
@@ -784,7 +784,7 @@ abstract class OptionsBase extends WebformElementBase {
       return [":input[name=\"{$name}[$other_type]$multiple\"]" => $options];
     }
     else {
-      $multiple = ($this->hasMultipleValues($element) && strpos($plugin_id, 'select') !== FALSE) ? '[]' : '';
+      $multiple = ($this->hasMultipleValues($element) && str_contains($plugin_id, 'select')) ? '[]' : '';
       return [":input[name=\"$name$multiple\"]" => $options];
     }
   }

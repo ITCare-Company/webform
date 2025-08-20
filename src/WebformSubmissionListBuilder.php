@@ -665,7 +665,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         $source_entity_options = $this->storage->getSourceEntitiesAsOptions($this->webform);
         $source_entity_default_value = $this->sourceEntityTypeId;
       }
-      elseif ($this->sourceEntityTypeId && strpos($this->sourceEntityTypeId, ':') !== FALSE) {
+      elseif ($this->sourceEntityTypeId && str_contains($this->sourceEntityTypeId, ':')) {
         $source_entity_options = $this->webform;
         try {
           [$source_entity_type, $source_entity_id] = explode(':', $this->sourceEntityTypeId);
@@ -1020,7 +1020,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         return ($is_raw) ? $entity->getWebform()->id() : $entity->getWebform()->toLink();
 
       default:
-        if (strpos($name, 'element__') === 0) {
+        if (str_starts_with($name, 'element__')) {
           $element = $column['element'];
           $options = $column;
 
@@ -1173,7 +1173,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
    *   or 'webform_submission.canonical.
    */
   protected function getSubmissionRouteName() {
-    return (strpos($this->routeMatch->getRouteName(), 'webform.user.submissions') !== FALSE) ? 'webform.user.submission' : 'webform_submission.' . $this->linkType;
+    return str_contains($this->routeMatch->getRouteName(), 'webform.user.submissions') ? 'webform.user.submission' : 'webform_submission.' . $this->linkType;
   }
 
   /**
@@ -1327,7 +1327,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
     // If query is order(ed) by 'element__*' we need to build a custom table
     // sort using hook_query_TAG_alter().
     // @see webform_query_webform_submission_list_builder_alter()
-    if (!empty($order['sql']) && strpos($order['sql'], 'element__') === 0) {
+    if (!empty($order['sql']) && str_starts_with($order['sql'], 'element__')) {
       $name = $order['sql'];
       $column = $this->columns[$name];
       $query->addTag('webform_submission_list_builder')
@@ -1463,7 +1463,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
     }
 
     // Filter by source entity.
-    if ($source_entity && strpos($source_entity, ':') !== FALSE) {
+    if ($source_entity && str_contains($source_entity, ':')) {
       [$entity_type, $entity_id] = explode(':', $source_entity);
       $query->condition('entity_type', $entity_type);
       $query->condition('entity_id', $entity_id);

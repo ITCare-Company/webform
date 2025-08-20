@@ -1222,7 +1222,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
     if ($webform_variant) {
       $is_add_operation = ($operation === 'add' && $this->access('update'));
       $is_test_operation = ($operation === 'test' && $this->access('test'));
-      $is_share_operation = (strpos(\Drupal::routeMatch()->getRouteName(), 'entity.webform.share_page') === 0);
+      $is_share_operation = str_starts_with(\Drupal::routeMatch()->getRouteName(), 'entity.webform.share_page');
       if ($is_add_operation || $is_test_operation || $is_share_operation) {
         $values += ['data' => []];
         $values['data'] = $webform_variant + $values['data'];
@@ -1675,7 +1675,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
 
       // Prevent regressions where webform_computed_* element is still using
       // #value instead of #template.
-      if (isset($element['#type']) && strpos($element['#type'], 'webform_computed_') === 0) {
+      if (isset($element['#type']) && str_starts_with($element['#type'], 'webform_computed_')) {
         if (isset($element['#value']) && !isset($element['#template'])) {
           $element['#template'] = $element['#value'];
           unset($element['#value']);

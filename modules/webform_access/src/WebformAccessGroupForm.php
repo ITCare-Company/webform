@@ -373,7 +373,7 @@ class WebformAccessGroupForm extends EntityForm {
 
     $table_names = $this->webformEntityReferenceManager->getTableNames();
     foreach ($table_names as $table_name => $field_name) {
-      if (strpos($table_name, 'node_revision__') !== 0) {
+      if (!str_starts_with($table_name, 'node_revision__')) {
         continue;
       }
       $query = $this->database->select($table_name, 'n');

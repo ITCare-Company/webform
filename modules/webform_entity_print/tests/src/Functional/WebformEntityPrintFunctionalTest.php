@@ -197,7 +197,7 @@ body {
    *   Array of archive contents.
    */
   protected function getArchiveContents($filepath) {
-    if (strpos($filepath, '.zip') !== FALSE) {
+    if (str_contains($filepath, '.zip')) {
       $archive = new \ZipArchive();
       $archive->open($filepath);
       $files = [];

@@ -104,7 +104,7 @@ function webform_update_8004() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, '#autocomplete_options') !== FALSE) {
+    if (str_contains($elements, '#autocomplete_options')) {
       $elements = str_replace('#autocomplete_options', '#autocomplete_items', $elements);
       $webform_config->set('elements', $elements);
       $webform_config->save(TRUE);
@@ -222,7 +222,7 @@ function webform_update_8011() {
 
     // Get data.
     $data = $webform_config->getRawData();
-    if (strpos($data['elements'], "'#format'") === FALSE) {
+    if (!str_contains($data['elements'], "'#format'")) {
       continue;
     }
 
@@ -1108,7 +1108,7 @@ function webform_update_8049() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, '#display_on') !== FALSE) {
+    if (str_contains($elements, '#display_on')) {
       $elements = str_replace('#display_on: display', '#display_on: view', $elements);
       $webform_config->set('elements', $elements);
       $webform_config->save(TRUE);
@@ -1512,7 +1512,7 @@ function webform_update_8075() {
 
     // Loop through state values looking for results.export variable.
     foreach ($values as $key => &$value) {
-      if (strpos($key, 'results.export') === 0) {
+      if (str_starts_with($key, 'results.export')) {
         switch ($value['entity_reference_format']) {
           case 'id':
             $value['entity_reference_items'] = ['id'];
@@ -1559,7 +1559,7 @@ function webform_update_8076() {
 
     // Loop through state values looking for results.export variable.
     foreach ($values as $key => &$value) {
-      if (strpos($key, 'results.export') === 0) {
+      if (str_starts_with($key, 'results.export')) {
         $value['options_single_format'] = $value['options_format'];
         $value['options_multiple_format'] = $value['options_format'];
         unset($value['options_format']);
@@ -1777,7 +1777,7 @@ function webform_update_8093() {
   foreach ($config_factory->listAll('webform.webform.') as $config_name) {
     $config = $config_factory->getEditable($config_name);
     $elements = $config->get('elements');
-    if (strpos($elements, "'#type': webform_composite") !== FALSE) {
+    if (str_contains($elements, "'#type': webform_composite")) {
       $elements = str_replace("'#type': webform_composite", "'#type': webform_custom_composite", $elements);
       $config->set('elements', $elements);
       $config->save(TRUE);
@@ -1824,7 +1824,7 @@ function webform_update_8096() {
     $config = $config_factory->getEditable($config_name);
     $data = $config->getRawData();
 
-    $likert = (strpos($data['id'], 'likert_') === 0) ? TRUE : FALSE;
+    $likert = str_starts_with($data['id'], 'likert_');
     WebformArrayHelper::insertAfter($data, 'category', 'likert', $likert);
     $config->setData($data);
     $config->save(TRUE);
@@ -1850,7 +1850,7 @@ function webform_update_8098() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, '#range__output') !== FALSE) {
+    if (str_contains($elements, '#range__output')) {
       // Convert properties.
       $elements = str_replace(
         ['#range__output_prefix', '#range__output_suffix', '#range__output'],
@@ -2019,7 +2019,7 @@ function webform_update_8109() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, 'webform_image_select') !== FALSE) {
+    if (str_contains($elements, 'webform_image_select')) {
       $install_webform_image_select = TRUE;
       break;
     }
@@ -2040,7 +2040,7 @@ function webform_update_8110() {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
     // Check for password and password_confirm element #type.
-    if (strpos($elements, "'#type': password") !== FALSE) {
+    if (str_contains($elements, "'#type': password")) {
       $has_password_element = TRUE;
       break;
     }
@@ -2256,7 +2256,7 @@ function webform_update_8124() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $data = $webform_config->getRawData();
-    if (strpos($data['elements'], "'#type': hidden") !== FALSE) {
+    if (str_contains($data['elements'], "'#type': hidden")) {
       $elements = WebformYaml::decode($data['elements']);
       _webform_update_8124($elements);
       $data['elements'] = WebformYaml::encode($elements);
@@ -2457,7 +2457,7 @@ function webform_update_8136() {
     $webform_config = $config_factory->getEditable($webform_config_name);
 
     $data = $webform_config->getRawData();
-    if (strpos($data['elements'], "'#counter_message'") === FALSE) {
+    if (!str_contains($data['elements'], "'#counter_message'")) {
       continue;
     }
 
@@ -2489,7 +2489,7 @@ function webform_update_8136() {
  */
 function _webform_update_8136(array &$element) {
   if (isset($element['#counter_message'])) {
-    if (strpos($element['#counter_message'], 'X') === FALSE) {
+    if (!str_contains($element['#counter_message'], 'X')) {
       $element['#counter_message'] = '%d ' . $element['#counter_message'];
     }
     else {
@@ -2527,7 +2527,7 @@ function webform_update_8138() {
   foreach ($config_factory->listAll('webform.webform.') as $config_name) {
     $config = $config_factory->getEditable($config_name);
     $elements = $config->get('elements');
-    if (strpos($elements, "'#type': webform_location") !== FALSE) {
+    if (str_contains($elements, "'#type': webform_location")) {
       $elements = str_replace("'#type': webform_location", "'#type': webform_location_geocomplete", $elements);
       $config->set('elements', $elements);
       $config->save(TRUE);
@@ -2738,7 +2738,7 @@ function webform_update_8149() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, "'add_more'") !== FALSE) {
+    if (str_contains($elements, "'add_more'")) {
       $elements = str_replace("'#add_more'", "'#add_more_items'", $elements);
       $elements = str_replace("'#multiple__add_more'", "'#multiple__add_more_items'", $elements);
       $webform_config->set('elements', $elements);
@@ -2797,7 +2797,7 @@ function webform_update_8151() {
     foreach ($flattened_elements as &$element) {
       // Convert #value property to #template property.
       // @see \Drupal\webform\Entity\Webform::initElementsRecursive
-      if (isset($element['#type']) && strpos($element['#type'], 'webform_computed_') === 0) {
+      if (isset($element['#type']) && str_starts_with($element['#type'], 'webform_computed_')) {
         $has_computed_element = TRUE;
         if (isset($element['#value']) && !isset($element['#template'])) {
           $element['#template'] = $element['#value'];
@@ -3218,8 +3218,8 @@ function webform_update_8173() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $data = $webform_config->getRawData();
-    if (strpos($data['elements'], 'webform_flexbox') !== FALSE
-      && strpos($data['elements'], 'webform_email_confirm') !== FALSE
+    if (str_contains($data['elements'], 'webform_flexbox')
+      && str_contains($data['elements'], 'webform_email_confirm')
     ) {
       $elements = WebformYaml::decode($data['elements']);
       _webform_update_8173($elements);
@@ -3352,7 +3352,7 @@ function webform_update_8180() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, 'webform_buttons') !== FALSE) {
+    if (str_contains($elements, 'webform_buttons')) {
       // Enable the webform_jqueryui_buttons.module.
       \Drupal::service('module_installer')
         ->install(['webform_jqueryui_buttons']);
@@ -3370,7 +3370,7 @@ function webform_update_8181() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, 'webform_location_geocomplete') !== FALSE) {
+    if (str_contains($elements, 'webform_location_geocomplete')) {
       $install_webform_location_geocomplete = TRUE;
       break;
     }
@@ -3404,7 +3404,7 @@ function webform_update_8182() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, 'webform_toggle') !== FALSE) {
+    if (str_contains($elements, 'webform_toggle')) {
       // Enable the webform_toggles.module.
       \Drupal::service('module_installer')
         ->install(['webform_toggles']);
@@ -3421,7 +3421,7 @@ function webform_update_8183() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->get($webform_config_name);
     $elements = $webform_config->get('elements');
-    if (strpos($elements, 'icheck') !== FALSE) {
+    if (str_contains($elements, 'icheck')) {
       // Enable the webform_icheck.module.
       \Drupal::service('module_installer')
         ->install(['webform_icheck']);
@@ -3952,9 +3952,9 @@ function webform_update_8601() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $yaml = WebformYaml::encode($webform_config->getRawData());
-    if (strpos($yaml, '[webform_submission:view-url') !== FALSE
-      || strpos($yaml, '[webform_submission:update-url') !== FALSE
-      || strpos($yaml, '[webform_submission:delete-url') !== FALSE) {
+    if (str_contains($yaml, '[webform_submission:view-url')
+      || str_contains($yaml, '[webform_submission:update-url')
+      || str_contains($yaml, '[webform_submission:delete-url')) {
       $yaml = str_replace('[webform_submission:view-url', '[webform_submission:token-view-url', $yaml);
       $yaml = str_replace('[webform_submission:update-url', '[webform_submission:token-update-url', $yaml);
       $yaml = str_replace('[webform_submission:delete-url', '[webform_submission:token-delete-url', $yaml);
@@ -4127,7 +4127,7 @@ function webform_update_8614() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $confirmation_url = $webform_config->get('settings.confirmation_url');
-    if (strpos($confirmation_url, '/') === 0) {
+    if (str_starts_with($confirmation_url, '/')) {
       $confirmation_url = substr($confirmation_url, 1);
       $webform_config->set('settings.confirmation_url', $confirmation_url);
       $webform_config->save();
@@ -4164,7 +4164,7 @@ function webform_update_8617() {
     foreach ($data['handlers'] as &$handler) {
       if ($handler['id'] === 'settings') {
         $confirmation_url = $handler['settings']['confirmation_url'];
-        if (strpos($confirmation_url, '/') === 0) {
+        if (str_starts_with($confirmation_url, '/')) {
           $handler['settings']['confirmation_url'] = substr($confirmation_url, 1);
           $has_settings_handler = TRUE;
         }

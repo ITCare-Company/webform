@@ -389,7 +389,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
     $form['types']['excluded_elements']['#header']['description']['width'] = '50%';
     // Add warning to all password elements.
     foreach ($form['types']['excluded_elements']['#options'] as $element_type => &$excluded_element_option) {
-      if (strpos($element_type, 'password') !== FALSE) {
+      if (str_contains($element_type, 'password')) {
         $excluded_element_option['description']['data']['message'] = [
           '#type' => 'webform_message',
           '#message_type' => 'warning',

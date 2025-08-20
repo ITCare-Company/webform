@@ -353,7 +353,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
 
       default:
         $theme = str_replace('webform_', 'webform_element_', $this->getPluginId());
-        if (strpos($theme, 'webform_') !== 0) {
+        if (!str_starts_with($theme, 'webform_')) {
           $theme = 'webform_element_' . $theme;
         }
         return [
@@ -800,7 +800,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
         // Don't allow anonymous temporary files to be previewed.
         // @see template_preprocess_file_link().
         // @see webform_preprocess_file_link().
-        if ($file->isTemporary() && $file->getOwner()->isAnonymous() && strpos($file->getFileUri(), 'private://') === 0) {
+        if ($file->isTemporary() && $file->getOwner()->isAnonymous() && str_starts_with($file->getFileUri(), 'private://')) {
           continue;
         }
 

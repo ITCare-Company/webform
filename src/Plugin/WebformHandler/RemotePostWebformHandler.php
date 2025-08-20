@@ -558,7 +558,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
     // Replace [webform:handler] tokens in submission data.
     // Data structured for [webform:handler:remote_post:completed:key] tokens.
     $submission_data = $webform_submission->getData();
-    $submission_has_token = (strpos(print_r($submission_data, TRUE), '[webform:handler:' . $this->getHandlerId() . ':') !== FALSE) ? TRUE : FALSE;
+    $submission_has_token = str_contains(print_r($submission_data, TRUE), '[webform:handler:' . $this->getHandlerId() . ':');
     if ($submission_has_token) {
       $response_data = $this->getResponseData($response);
       $token_data = ['webform_handler' => [$this->getHandlerId() => [$state => $response_data]]];
@@ -1079,7 +1079,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
     $error_url = $this->replaceTokens($this->configuration['error_url'], $this->getWebformSubmission());
     if ($error_url && PHP_SAPI !== 'cli') {
       // Convert error path to URL.
-      if (strpos($error_url, '/') === 0) {
+      if (str_starts_with($error_url, '/')) {
         $error_url = $base_url . preg_replace('#^' . $base_path . '#', '/', $error_url);
       }
 

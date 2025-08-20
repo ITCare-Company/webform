@@ -471,7 +471,7 @@ trait WebformEntityReferenceTrait {
       $selection_settings = (!empty($user_input['properties']['selection_settings'])) ? $user_input['properties']['selection_settings'] : [];
       // If the default selection handler has changed when need to update its
       // value.
-      if (strpos($selection_handler, 'default:') === 0 && $selection_handler !== "default:$target_type") {
+      if (str_starts_with($selection_handler, 'default:') && $selection_handler !== "default:$target_type") {
         $selection_handler = "default:$target_type";
         $selection_settings = [];
         NestedArray::setValue($form_state->getUserInput(), ['properties', 'selection_handler'], $selection_handler);
@@ -680,7 +680,7 @@ trait WebformEntityReferenceTrait {
    */
   protected function formatHtmlItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $format = $this->getItemsFormat($element);
-    if (strpos($format, 'checklist:') === 0) {
+    if (str_starts_with($format, 'checklist:')) {
       $this->setOptions($element);
     }
     return parent::formatHtmlItems($element, $webform_submission, $options);
@@ -691,7 +691,7 @@ trait WebformEntityReferenceTrait {
    */
   protected function formatTextItems(array &$element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $format = $this->getItemsFormat($element);
-    if (strpos($format, 'checklist:') === 0) {
+    if (str_starts_with($format, 'checklist:')) {
       $this->setOptions($element);
     }
     return parent::formatTextItems($element, $webform_submission, $options);

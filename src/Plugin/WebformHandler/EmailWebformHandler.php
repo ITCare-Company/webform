@@ -899,7 +899,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     foreach ($this->configuration as $configuration_key => $configuration_value) {
       // Get configuration name (to, cc, bcc, from, name, subject, mail)
       // and type (mail, options, or text).
-      [$configuration_name, $configuration_type] = (strpos($configuration_key, '_') !== FALSE) ? explode('_', $configuration_key) : [$configuration_key, 'text'];
+      [$configuration_name, $configuration_type] = str_contains($configuration_key, '_') ? explode('_', $configuration_key) : [$configuration_key, 'text'];
 
       // Set options and continue.
       if ($configuration_type === 'options') {
@@ -927,7 +927,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       }
       else {
         // Clear tokens from email values.
-        $token_options['clear'] = (strpos($configuration_key, '_mail') !== FALSE) ? TRUE : FALSE;
+        $token_options['clear'] = str_contains($configuration_key, '_mail');
 
         // Get replace token values.
         $token_value = $this->replaceTokens($configuration_value, $webform_submission, $token_data, $token_options);
@@ -1574,7 +1574,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    *   A select other element.
    */
   protected function buildElement($name, $title, $label, $required = FALSE, array $element_options = [], ?array $options_options = NULL, ?array $role_options = NULL, ?array $other_options = NULL) {
-    [$element_name, $element_type] = (strpos($name, '_') !== FALSE) ? explode('_', $name) : [$name, 'text'];
+    [$element_name, $element_type] = str_contains($name, '_') ? explode('_', $name) : [$name, 'text'];
 
     $default_option = $this->getDefaultConfigurationValue($name);
 

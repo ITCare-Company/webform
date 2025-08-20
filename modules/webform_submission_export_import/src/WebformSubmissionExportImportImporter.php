@@ -609,7 +609,7 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
 
       // Check if record name is a composite element which is
       // delimited using '__'.
-      if (strpos($name, '__') === FALSE) {
+      if (!str_contains($name, '__')) {
         continue;
       }
 

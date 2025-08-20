@@ -1180,7 +1180,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     // Apply multiple properties.
     $multiple_properties = $this->defineDefaultMultipleProperties();
     foreach ($multiple_properties as $multiple_property => $multiple_value) {
-      if (strpos($multiple_property, 'multiple__') === 0) {
+      if (str_starts_with($multiple_property, 'multiple__')) {
         $property_name = str_replace('multiple__', '', $multiple_property);
         $element["#$property_name"] = $element["#$multiple_property"] ?? $multiple_value;
       }
@@ -3334,7 +3334,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     }
 
     // Add warning to all password elements that are stored in the database.
-    if (strpos($this->pluginId, 'password') !== FALSE && !$webform->getSetting('results_disabled')) {
+    if (str_contains($this->pluginId, 'password') && !$webform->getSetting('results_disabled')) {
       $form['element']['password_message'] = [
         '#type' => 'webform_message',
         '#message_type' => 'warning',

@@ -18,7 +18,7 @@ class WebformTestHandlerRemotePostClient extends Client {
    * {@inheritdoc}
    */
   public function request($method, $uri = '', array $options = []): ResponseInterface {
-    if (strpos($uri, 'http://webform-test-handler-remote-post/') === FALSE) {
+    if (!str_contains($uri, 'http://webform-test-handler-remote-post/')) {
       return parent::request($method, $uri, $options);
     }
 

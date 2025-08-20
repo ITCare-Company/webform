@@ -478,7 +478,7 @@ function webform_preprocess_file_link(&$variables) {
   $file = ($file instanceof File) ? $file : File::load($file->fid);
 
   // Remove link to temporary anonymous private file uploads.
-  if ($file->isTemporary() && $file->getOwner() && $file->getOwner()->isAnonymous() && strpos($file->getFileUri(), 'private://webform/') === 0) {
+  if ($file->isTemporary() && $file->getOwner() && $file->getOwner()->isAnonymous() && str_starts_with($file->getFileUri(), 'private://webform/')) {
     $variables['link'] = $file->getFilename();
   }
 
@@ -520,7 +520,7 @@ function _webform_preprocess_options(array &$variables) {
   $variables['attributes']['class'][] = Html::getClass('js-webform-' . $element['#type']);
 
   if (!empty($element['#options_display'])) {
-    if (strpos($element['#options_display'], 'buttons_') === 0) {
+    if (str_starts_with($element['#options_display'], 'buttons_')) {
       $variables['attributes']['class'][] = 'webform-options-display-buttons';
     }
     $variables['attributes']['class'][] = Html::getClass('webform-options-display-' . $element['#options_display']);
@@ -790,7 +790,7 @@ function _webform_theme_suggestions(array $variables, $hook) {
   elseif ($hook === 'webform_submission_form' && isset($variables['form']) && isset($variables['form']['#webform_id'])) {
     $suggestions[] = $hook . '__' . $variables['form']['#webform_id'];
   }
-  elseif (strpos($hook, 'webform_element_base_') === 0 || strpos($hook, 'webform_container_base_') === 0) {
+  elseif (str_starts_with($hook, 'webform_element_base_') || str_starts_with($hook, 'webform_container_base_')) {
     $element = $variables['element'];
 
     if (!empty($element['#type'])) {
@@ -850,7 +850,7 @@ function _webform_devel_hook_theme_suggestions_generate() {
     if ($hook === 'webform') {
       $suggestion = TRUE;
     }
-    elseif (strpos($hook, 'webform_element_base_') === 0 || strpos($hook, 'webform_container_base_') === 0) {
+    elseif (str_starts_with($hook, 'webform_element_base_') || str_starts_with($hook, 'webform_container_base_')) {
       $suggestion = TRUE;
     }
     elseif (isset($info['variables'])
@@ -1046,7 +1046,7 @@ function _webform_theme_suggestions_options(array $variables, $type) {
 
   $element = $variables['element'];
   $suggestions = [];
-  if (!empty($element['#options_display']) && strpos($element['#options_display'], 'buttons') === 0) {
+  if (!empty($element['#options_display']) && str_starts_with($element['#options_display'], 'buttons')) {
     $suggestions[] = $type . '__webform_' . $element['#options_display'];
   }
   return $suggestions;

@@ -131,7 +131,7 @@ class WebformElementAttributes extends FormElementBase {
 
     // Apply custom properties. Typically used for descriptions.
     foreach ($element as $key => $value) {
-      if (strpos($key, '__') !== FALSE) {
+      if (str_contains($key, '__')) {
         [$element_key, $property_key] = explode('__', ltrim($key, '#'));
         $element[$element_key]["#$property_key"] = $value;
       }
