@@ -354,6 +354,7 @@ date:
   admin_notes: ''
   admin_title: ''
   attributes: {  }
+  autocomplete: 'on'
   date_date_format: Y-m-d
   date_date_max: ''
   date_date_min: ''
