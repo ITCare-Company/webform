@@ -176,7 +176,9 @@ class WebformElementAttributes extends FormElementBase {
       $attributes['style'] = $values['style'];
     }
 
-    if (!empty($values['attributes'])) {
+    // Make sure the attributes are validate via the WebformCodeMirror element.
+    // @see \Drupal\webform\Element\WebformCodeMirror::validateWebformCodeMirror
+    if (!empty($values['attributes']) && !$form_state->getError($element['attributes'])) {
       $attributes += Yaml::decode($values['attributes']);
     }
 
