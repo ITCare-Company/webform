@@ -285,6 +285,12 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
       'in_draft' => FALSE,
     ];
 
+    // If the source entity is new, it can't have previous submission.
+    // This allows new webform nodes to be previewed.
+    if ($source_entity && $source_entity->isNew()) {
+      return 0;
+    }
+
     $query = $this->getQuery();
     $query->accessCheck(FALSE);
     $this->addQueryConditions($query, $webform, $source_entity, $account, $options);
