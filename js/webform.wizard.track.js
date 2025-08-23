@@ -19,7 +19,6 @@
     attach(context) {
       // Make sure on page load or Ajax refresh the browser's URL ?page= query
       // parameter is correct since conditional logic can skip pages.
-      // Note: window.history is only supported by IE 10+.
       if (window.history && window.history.replaceState) {
         var $form = $(context).hasData('webform-wizard-current-page')
           ? $(context)

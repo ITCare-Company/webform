@@ -75,14 +75,6 @@
             options.max_selected_options = $select.data('limit');
           }
 
-          // Remove required attribute from IE11 which breaks
-          // HTML5 clientside validation.
-          if (window.navigator.userAgent.indexOf('Trident/') !== -1
-            && $select.attr('multiple')
-            && $select.attr('required')) {
-            $select.removeAttr('required');
-          }
-
           $select.chosen(options);
         });
     }

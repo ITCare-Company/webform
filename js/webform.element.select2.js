@@ -58,15 +58,6 @@ if (!jQuery.trim) {
             options.maximumSelectionLength = $select.data('limit');
           }
 
-          // Remove required attribute from IE11 which breaks
-          // HTML5 clientside validation.
-          // @see https://github.com/select2/select2/issues/5114
-          if (window.navigator.userAgent.indexOf('Trident/') !== -1
-            && $select.attr('multiple')
-            && $select.attr('required')) {
-            $select.removeAttr('required');
-          }
-
           $select.select2(options);
         });
 
