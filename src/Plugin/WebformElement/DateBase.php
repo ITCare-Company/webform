@@ -621,6 +621,8 @@ abstract class DateBase extends WebformElementBase {
     $format = DateFormat::load('html_datetime')->getPattern();
     if (!empty($element['#date_year_range'])) {
       [$min, $max] = static::datetimeRangeYears($element['#date_year_range']);
+      $min = strtotime("$min-01-01 00:00:00");
+      $max = strtotime("$max-01-01 00:00:00");
     }
     elseif (!empty($element['#date_date_min']) && empty($element['#date_date_max'])) {
       $min = strtotime($element['#date_date_min']);
