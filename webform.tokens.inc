@@ -272,22 +272,16 @@ function _webform_token_get_submission_values(array $options, WebformSubmissionI
  *   Rendered webform more element.
  */
 function _webform_token_render_more($more_title, $more) {
-  $build = [
-    '#type' => 'webform_more',
-    '#more' => $more,
-    '#more_title' => $more_title,
-  ];
-
   // Token info might be called via CLI and not all modules are loaded
-  // or an active theme is defined.
+  // or an active theme is NOT defined.
   //
-  // Prevent the below exceptions:
+  // We are preventing the below exceptions:
   // - The theme implementations may not be rendered until all modules
   //   are loaded.
   // - Call to a member function setParser() on array in Twig\Parser->parse().
   //
   // @see \Drupal\Core\Theme\ThemeManager::render
-  /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
+  /** @var \Drupal\webform\WebformThemeManagerInterface $theme_manager */
   $module_handler = \Drupal::service('module_handler');
   /** @var \Drupal\webform\WebformThemeManagerInterface $theme_manager */
   $theme_manager = \Drupal::service('webform.theme_manager');
@@ -295,6 +289,26 @@ function _webform_token_render_more($more_title, $more) {
     return '';
   }
 
+  /** @var \Drupal\Core\Session\AccountInterface $current_user */
+  $current_user = \Drupal::currentUser();
+  // Never render the more widget for anonymous users.
+  if ($current_user->isAnonymous()) {
+    return '';
+  }
+
+  // Make sure the current user can use webform tokens.
+  if (!$current_user->hasPermission('administer webform')
+    && !$current_user->hasPermission('create webform')
+    && !$current_user->hasPermission('edit any webform')
+    && !$current_user->hasPermission('edit own webform')) {
+    return '';
+  }
+
+  $build = [
+    '#type' => 'webform_more',
+    '#more' => $more,
+    '#more_title' => $more_title,
+  ];
   return (string) \Drupal::service('renderer')->renderInIsolation($build);
 }
 
