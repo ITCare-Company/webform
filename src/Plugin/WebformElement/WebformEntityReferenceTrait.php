@@ -547,6 +547,7 @@ trait WebformEntityReferenceTrait {
     $form['entity_reference']['selection_handler'] = [
       '#type' => 'select',
       '#title' => $this->t('Reference method'),
+      '#description' => $this->t('For more advanced use-cases like rendered entities or more complex entity filtering or sorting, you may want to use the "Views: Filter by an entity reference view" reference method.'),
       '#options' => $handlers_options,
       '#required' => TRUE,
       '#default_value' => $selection_handler,
