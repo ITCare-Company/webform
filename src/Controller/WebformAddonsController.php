@@ -6,18 +6,12 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\webform\Element\WebformMessage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides route responses for Webform add-ons.
  */
 class WebformAddonsController extends ControllerBase implements ContainerInjectionInterface {
-
-  /**
-   * The current request.
-   *
-   * @var \Symfony\Component\HttpFoundation\Request
-   */
-  protected $request;
 
   /**
    * The webform theme manager.
@@ -38,7 +32,6 @@ class WebformAddonsController extends ControllerBase implements ContainerInjecti
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->request = $container->get('request_stack')->getCurrentRequest();
     $instance->themeManager = $container->get('webform.theme_manager');
     $instance->addons = $container->get('webform.addons_manager');
     return $instance;
@@ -47,10 +40,13 @@ class WebformAddonsController extends ControllerBase implements ContainerInjecti
   /**
    * Returns the Webform add-ons page.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
    * @return array
-   *   The webform submission webform.
+   *   The webform module's add-ons.
    */
-  public function index() {
+  public function index(Request $request) {
     $build = [
       '#type' => 'container',
       '#attributes' => [
@@ -107,7 +103,7 @@ class WebformAddonsController extends ControllerBase implements ContainerInjecti
     // Store and disable compact mode.
     // @see system_admin_compact_mode
     $system_admin_compact_mode = system_admin_compact_mode();
-    $this->request->cookies->set('Drupal_visitor_admin_compact_mode', FALSE);
+    $request->cookies->set('Drupal_visitor_admin_compact_mode', FALSE);
 
     $categories = $this->addons->getCategories();
     foreach ($categories as $category_name => $category) {
@@ -160,7 +156,7 @@ class WebformAddonsController extends ControllerBase implements ContainerInjecti
     }
 
     // Reset compact mode to stored setting.
-    $this->request->cookies->get('Drupal_visitor_admin_compact_mode', $system_admin_compact_mode);
+    $request->cookies->get('Drupal_visitor_admin_compact_mode', $system_admin_compact_mode);
 
     // No results.
     $build['no_results'] = [
