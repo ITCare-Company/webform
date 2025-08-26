@@ -18,7 +18,7 @@
    * @type {Drupal~behavior}
    */
   Drupal.behaviors.webformTelephoneInternational = {
-    attach(context) {
+    attach: function (context) {
       if (!$.fn.intlTelInput) {
         return;
       }
@@ -55,22 +55,7 @@
         };
 
         var validate = function () {
-          if ($telephone.val().trim()) {
-            if (!$telephone.intlTelInput('isValidNumber')) {
-              $telephone.addClass('error');
-              var placeholder = $telephone.attr('placeholder');
-              var message;
-              if (placeholder) {
-                message = Drupal.t('The phone number is not valid. (e.g. @example)', {'@example': placeholder});
-              }
-              else {
-                message = Drupal.t('The phone number is not valid.');
-              }
-              $error.html(message).show();
-              return false;
-            }
-          }
-          return true;
+          return Drupal.webformTelephoneInternationalValidate($telephone, $error);
         };
 
         $telephone.on('blur', function () {
@@ -97,6 +82,35 @@
         });
       });
     }
+  };
+
+  /**
+   * Validates a given telephone number within a webform.
+   *
+   * @param {jQuery} $telephone
+   *   A telephone element.
+   * @param {jQuery} $error
+   *   A error element.
+   *
+   * @returns {boolean}
+   *   Returns true if the telephone number is valid; otherwise, false.
+   */
+  Drupal.webformTelephoneInternationalValidate = function ($telephone, $error) {
+    if (!$telephone.val().trim() || $telephone.intlTelInput('isValidNumber')) {
+      return true;
+    }
+
+    $telephone.addClass('error');
+    var placeholder = $telephone.attr('placeholder');
+    var message;
+    if (placeholder) {
+      message = Drupal.t('The phone number is not valid. (e.g. @example)', {'@example': placeholder});
+    }
+    else {
+      message = Drupal.t('The phone number is not valid.');
+    }
+    $error.html(message).show();
+    return false;
   };
 
 })(jQuery, Drupal, drupalSettings, once);
