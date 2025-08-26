@@ -103,6 +103,8 @@ class WebformAdminConfigAdvancedForm extends WebformAdminConfigBaseForm {
         . $this->t('This behavior is disabled when the <a href=":href">Tippy.js library is disabled</a>.', [':href' => Url::fromRoute('webform.config.libraries')->toString()]) . '</em>',
         '#default_value' => $config->get('ui.description_help'),
         '#disabled' => TRUE,
+        // Prevent the checkbox value from being included via $form_state->getValue('ui').
+        '#parents' => [],
       ];
     }
     else {

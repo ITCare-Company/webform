@@ -4332,3 +4332,12 @@ function webform_update_8639() {
     ->clear('requirements.bootstrap')
     ->save();
 }
+
+/**
+ * Issue #3522507: SchemaIncompleteException for webform.settings:ui.description_help_disabled.
+ */
+function webform_update_8640() {
+  \Drupal::configFactory()->getEditable('webform.settings')
+    ->clear('ui.description_help_disabled')
+    ->save();
+}
