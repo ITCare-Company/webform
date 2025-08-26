@@ -65,7 +65,10 @@
           delay: 100,
           allowHTML: true,
           interactive: true,
-          plugins: [hideOnEsc]
+          plugins: [hideOnEsc],
+          aria: {
+            expanded: null
+          }
         }, Drupal.webform.elementHelpIcon.options);
 
         tippy(this, options);
