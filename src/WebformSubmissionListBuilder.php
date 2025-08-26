@@ -3,6 +3,7 @@
 namespace Drupal\webform;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
@@ -428,7 +429,23 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function render() {
-    $build = [];
+    // Wrap the results form and table in a <div> with classes.
+    $classes = [];
+    $classes[] = 'webform-results';
+    if ($this->webform) {
+      $classes[] = 'webform-results'
+        . '-' . Html::getClass($this->webform->id());
+    }
+    if ($this->webform && $this->sourceEntity) {
+      $classes[] = 'webform-results'
+        . '-' . Html::getClass($this->webform->id())
+        . '-' . Html::getClass($this->sourceEntity->getEntityTypeId())
+        . '-' . Html::getClass($this->sourceEntity->id());
+    }
+    $build = [
+      '#type' => 'container',
+      '#attributes' => ['class' => $classes],
+    ];
 
     // Set user specific page title.
     if ($this->webform && $this->account) {
