@@ -3718,6 +3718,11 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
           if ($default_properties[$property_name] == $element_properties[$property_name]) {
             unset($element_properties[$property_name]);
           }
+          // Compare #access array values and ignore the array order.
+          elseif (str_starts_with($property_name, 'access')
+            && WebformArrayHelper::equal($default_properties[$property_name], $element_properties[$property_name])) {
+            unset($element_properties[$property_name]);
+          }
 
           // Cast data types (except #multiple).
           if (isset($element_properties[$property_name])) {
@@ -3732,6 +3737,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
               }
             }
           }
+
           break;
       }
     }
