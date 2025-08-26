@@ -74,6 +74,10 @@
           if ($select.data('limit')) {
             options.max_selected_options = $select.data('limit');
           }
+          // Allow custom options.
+          if ($select.attr('data-options')) {
+            options = $.extend(JSON.parse($input.attr('data-options')), options);
+          }
 
           $select.chosen(options);
         });

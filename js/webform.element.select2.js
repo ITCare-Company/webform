@@ -57,6 +57,10 @@ if (!jQuery.trim) {
           if ($select.data('limit')) {
             options.maximumSelectionLength = $select.data('limit');
           }
+          // Allow custom options.
+          if ($select.attr('data-options')) {
+            options = $.extend(JSON.parse($input.attr('data-options')), options);
+          }
 
           $select.select2(options);
         });
