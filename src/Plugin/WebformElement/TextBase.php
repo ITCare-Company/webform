@@ -448,6 +448,10 @@ abstract class TextBase extends WebformElementBase {
         'title' => $this->t('Lowercase'),
         'example' => 'lowercase',
       ],
+      "'casing': 'title'" => [
+        'title' => $this->t('Titlecase'),
+        'example' => 'Main Title',
+      ],
     ];
 
     // Get input masks, use ModuleHandler::invokeAllWith() to ensure that
