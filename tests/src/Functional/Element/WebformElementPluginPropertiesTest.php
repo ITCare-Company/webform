@@ -4845,6 +4845,8 @@ webform_terms_of_service:
   states: {  }
   states_clear: true
   terms_content: ''
+  terms_link: ''
+  terms_link_target: ''
   terms_title: ''
   terms_type: modal
   title: 'I agree to the {terms of service}.'
