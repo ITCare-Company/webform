@@ -449,7 +449,7 @@ abstract class TextBase extends WebformElementBase {
         'example' => 'lowercase',
       ],
       "'casing': 'title'" => [
-        'title' => $this->t('Titlecase'),
+        'title' => $this->t('Title case'),
         'example' => 'Main Title',
       ],
     ];
