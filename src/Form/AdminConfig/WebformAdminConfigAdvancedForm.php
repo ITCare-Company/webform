@@ -158,7 +158,6 @@ class WebformAdminConfigAdvancedForm extends WebformAdminConfigBaseForm {
       '#type' => 'checkbox',
       '#title' => $this->t('Disable promotions'),
       '#description' => $this->t('If checked, dismissible promotion messages that appear when the Webform module is updated will be disabled.') . ' ' .
-      $this->t('Promotions on the <a href=":href">Webform: Add-ons</a> page will still be displayed.', [':href' => Url::fromRoute('webform.addons')->toString()]) . '<br/>' .
       $this->t('Note: Promotions are only visible to users who can <em>administer modules</em>.'),
       '#return_value' => TRUE,
       '#default_value' => $config->get('ui.promotions_disabled'),
@@ -166,7 +165,7 @@ class WebformAdminConfigAdvancedForm extends WebformAdminConfigBaseForm {
     $form['ui']['support_disabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Disable support options'),
-      '#description' => $this->t('If checked, support option, displayed on the <a href=":href_addons">Add-ons</a> and <a href=":help_href">Help</a> pages will be disabled.', [':href_addons' => Url::fromRoute('webform.addons')->toString(), ':href_help' => Url::fromRoute('webform.help')->toString()]),
+      '#description' => $this->t('If checked, support option, displayed on the <a href=":help_href">Help</a> page will be disabled.', [':href_help' => Url::fromRoute('webform.help')->toString()]),
       '#return_value' => TRUE,
       '#default_value' => $config->get('ui.support_disabled'),
     ];

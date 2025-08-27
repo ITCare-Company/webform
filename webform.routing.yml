@@ -72,16 +72,6 @@ webform.config.repair:
   requirements:
     _permission: 'administer webform'
 
-# Add-ons
-
-webform.addons:
-  path: '/admin/structure/webform/addons'
-  defaults:
-    _controller: '\Drupal\webform\Controller\WebformAddonsController::index'
-    _title: 'Webforms: Add-ons'
-  requirements:
-    _permission: 'administer webform'
-
 # Help
 
 webform.help:

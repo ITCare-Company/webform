@@ -259,19 +259,6 @@ div.webform-form-filter input.webform-form-filter-text {
 }
 
 /**
- * Add-ons.
- *
- * @see /admin/structure/webform/addons
- */
-.webform-addons .admin-item__link {
-  display: block;
-}
-
-.webform-addons .claro-details__wrapper {
-  margin: 0;
-}
-
-/**
  * Multiple elements.
  */
 .webform-multiple-table td > .form-item:only-child,
