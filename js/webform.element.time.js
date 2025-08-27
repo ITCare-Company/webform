@@ -26,7 +26,7 @@
         return;
       }
 
-      $(once('webformTimePicker', 'input[data-webform-time-format]', context)).each(function () {
+      $(once('webformTimePicker', 'input[type="text"][data-webform-time-format]', context)).each(function () {
         var $input = $(this);
         var options = {};
         options.timeFormat = $input.data('webformTimeFormat');
