@@ -24,6 +24,7 @@ use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformMessageManagerInterface;
 use Drupal\webform\WebformSubmissionInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -532,8 +533,13 @@ class RemotePostWebformHandler extends WebformHandlerBase {
         $response = $this->httpClient->$method($request_url, $request_options);
       }
     }
-    catch (RequestException $request_exception) {
-      $response = $request_exception->getResponse();
+    catch (TransferException $request_exception) {
+      if ($request_exception instanceof RequestException) {
+        $response = $request_exception->getResponse();
+      }
+      else {
+        $response = NULL;
+      }
 
       // Encode HTML entities to prevent broken markup from breaking the page.
       $message = $request_exception->getMessage();

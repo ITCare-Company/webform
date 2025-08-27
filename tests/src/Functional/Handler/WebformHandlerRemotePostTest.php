@@ -159,6 +159,18 @@ options:
     $assert_session->responseContains('Failed to process completed request.');
     $assert_session->responseContains('Unable to process this submission. Please contact the site administrator.');
 
+    // Check RequestException.
+    $this->postSubmission($webform, ['response_type' => 'RequestException']);
+    $assert_session->responseContains('This is a RequestException message.');
+    $assert_session->responseNotContains('Processed completed request.');
+    $assert_session->responseContains('Unable to process this submission. Please contact the site administrator.');
+
+    // Check ConnectException.
+    $this->postSubmission($webform, ['response_type' => 'ConnectException']);
+    $assert_session->responseContains('This is a ConnectException message.');
+    $assert_session->responseNotContains('Processed completed request.');
+    $assert_session->responseContains('Unable to process this submission. Please contact the site administrator.');
+
     // Check default custom response message.
     $handler = $webform->getHandler('remote_post');
     $handler->setSetting('message', 'This is a custom response message');
