@@ -3240,6 +3240,7 @@ webform_flexbox:
   format_attributes: {  }
   format_html: ''
   format_text: ''
+  justify_content: flex-start
   randomize: false
   states: {  }
   states_clear: true
