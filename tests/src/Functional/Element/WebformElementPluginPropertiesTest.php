@@ -828,6 +828,7 @@ fieldset:
   states: {  }
   states_clear: true
   title: ''
+  title_attributes: {  }
   title_display: ''
 hidden:
   access_create_permissions: {  }
