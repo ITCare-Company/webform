@@ -681,6 +681,10 @@ abstract class OptionsBase extends WebformElementBase {
       }
       // Separate multiple values (i.e. options).
       foreach ($element_options as $option_value => $option_text) {
+        // The option value must be cast to a string because PHP automatically casts incremental numbers
+        // in an array to integers. The option value is stored via a webform submission as a string.
+        // @see https://www.php.net/manual/en/language.types.array.php#language.types.array.syntax
+        $option_value = (string) $option_value;
         if (is_array($value) && isset($value[$option_value])) {
           unset($value[$option_value]);
           $record[] = ($deltas) ? ($deltas[$option_value] + 1) : 'X';
