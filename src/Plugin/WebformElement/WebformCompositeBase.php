@@ -796,11 +796,14 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         continue;
       }
 
-      if ($export_options['composite_element_item_format'] === 'label' && $composite_element['#type'] !== 'textfield' && !empty($composite_element['#options'])) {
+      if (!isset($value[$composite_key])) {
+        $record[] = NULL;
+      }
+      elseif ($export_options['composite_element_item_format'] === 'label' && $composite_element['#type'] !== 'textfield' && !empty($composite_element['#options'])) {
         $record[] = WebformOptionsHelper::getOptionText($value[$composite_key], $composite_element['#options']);
       }
       else {
-        $record[] = $value[$composite_key] ?? NULL;
+        $record[] = $value[$composite_key];
       }
     }
     return $record;
