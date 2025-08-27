@@ -4341,3 +4341,10 @@ function webform_update_8640() {
     ->clear('ui.description_help_disabled')
     ->save();
 }
+
+/**
+ * Issue #3439662: Allow a WebformEmailHandler to specify the language of an email message.
+ */
+function webform_update_8641() {
+  _webform_update_webform_handler_settings();
+}
