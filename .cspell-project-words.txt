@@ -173,6 +173,7 @@ testprintengine
 texto
 Tfor
 Timepicker
+titlecase
 togglelink
 Traducción
 TRANSLIT
