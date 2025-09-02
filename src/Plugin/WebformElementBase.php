@@ -1991,7 +1991,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
    * Form API callback. Validate element #unique value.
    */
   public static function validateUnique(array &$element, FormStateInterface $form_state) {
-    if (!isset($element['#unique'])) {
+    if (empty($element['#unique'])) {
       return;
     }
 
@@ -2085,7 +2085,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
    * Form API callback. Validate element #unique multiple values.
    */
   public static function validateUniqueMultiple(array &$element, FormStateInterface $form_state) {
-    if (!isset($element['#unique'])) {
+    if (empty($element['#unique'])) {
       return;
     }
 
