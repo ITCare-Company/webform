@@ -193,3 +193,8 @@ wfro
 wfsec
 whitelist
 whitelisted
+computado
+enviar
+envío
+formulario
+mensaje
