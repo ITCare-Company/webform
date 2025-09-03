@@ -4348,3 +4348,10 @@ function webform_update_8640() {
 function webform_update_8641() {
   _webform_update_webform_handler_settings();
 }
+
+/**
+ * Issue #3449549: Webform 'remote_post' handler doesn't exclude fields without access.
+ */
+function webform_update_8642() {
+  _webform_update_webform_handler_settings();
+}
