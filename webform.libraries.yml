@@ -60,6 +60,12 @@ webform.admin.dropbutton:
   dependencies:
     - core/drupal.dropbutton
 
+webform.admin.machine-name:
+  js:
+    js/webform.admin.machine-name.js: {}
+  dependencies:
+    - core/drupal.machine-name
+
 webform.admin.off_canvas:
   js:
     js/webform.admin.off-canvas.js: {}

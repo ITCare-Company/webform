@@ -82,6 +82,7 @@ class WebformAccessGroupForm extends EntityForm {
     switch ($this->operation) {
       case 'duplicate':
         $form['#title'] = $this->t("Duplicate '@label' access group", ['@label' => $webform_access_group->label()]);
+        $form['#attached']['library'][] = 'webform/webform.admin.machine-name';
         break;
 
       case 'edit':
