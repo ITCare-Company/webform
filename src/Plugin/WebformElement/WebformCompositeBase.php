@@ -413,7 +413,10 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         }
         foreach ($lines as $key => $line) {
           if (is_string($line)) {
-            $lines[$key] = ['#markup' => $line];
+            // Note: We have to include the empty '#markup' to ensure the line
+            // is rendered as expected via an item_list.
+            // @see \template_preprocess_item_list()
+            $lines[$key] = ['#plain_text' => $line, '#markup' => ''];
           }
           $lines[$key]['#suffix'] = '<br />';
         }

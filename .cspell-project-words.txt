@@ -77,7 +77,6 @@ palantirnet
 Pardot
 phpcompatibility
 placedog
-formta
 phplint
 Presolve
 previewtitle
