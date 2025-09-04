@@ -89,6 +89,23 @@ webform.help.video:
   requirements:
     _permission: 'access content'
 
+# Assets
+webform.assets.javascript:
+  path: '/webform/assets/global.js'
+  defaults:
+    _controller: '\Drupal\webform\Controller\WebformAssetsController::javascript'
+  requirements:
+    # Global JavaScript is available to all users.
+    _access: 'TRUE'
+
+webform.assets.css:
+  path: '/webform/assets/global.css'
+  defaults:
+    _controller: '\Drupal\webform\Controller\WebformAssetsController::css'
+  requirements:
+    # Global CSS is available to all users.
+    _access: 'TRUE'
+
 # Forms
 
 entity.webform.collection:

@@ -1200,26 +1200,17 @@ class WebformSubmissionForm extends ContentEntityForm {
   /**
    * Attach libraries to the form.
    *
+   * Webform specific libraries are attached via _webform_page_attachments().
+   *
    * @param array $form
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
+   *
+   * @see _webform_page_attachments()
    */
   protected function attachLibraries(array &$form, FormStateInterface $form_state) {
-    // Default: Add CSS and JS.
-    // @see https://www.drupal.org/node/2274843#inline
     $form['#attached']['library'][] = 'webform/webform.form';
-
-    // Assets: Add custom shared and webform specific CSS and JS.
-    // @see webform_library_info_build()
-    // @see _webform_page_attachments()
-    $webform = $this->getWebform();
-    $assets = $webform->getAssets();
-    foreach ($assets as $type => $value) {
-      if ($value) {
-        $form['#attached']['library'][] = 'webform/webform.' . $type . '.' . $webform->id();
-      }
-    }
   }
 
   /**

@@ -292,6 +292,15 @@ function _webform_page_attachments(array &$attachments) {
     return;
   }
 
+  // Assets: Add global CSS and JS.
+  $config = \Drupal::config('webform.settings');
+  if ($config->get('assets.css')) {
+    $attachments['#attached']['library'][] = 'webform/webform.css';
+  }
+  if ($config->get('assets.javascript')) {
+    $attachments['#attached']['library'][] = 'webform/webform.javascript';
+  }
+
   // Assets: Add custom shared and webform specific CSS and JS.
   // @see webform_library_info_build()
   $assets = $webform->getAssets();

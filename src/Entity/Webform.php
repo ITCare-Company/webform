@@ -124,6 +124,8 @@ use Drupal\webform\WebformSubmissionStorageInterface;
  *     "third_party_settings",
  *   },
  *   lookup_keys = {
+ *     "css",
+ *     "javascript",
  *     "status",
  *     "template",
  *   },
@@ -911,10 +913,6 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
 
     // Css.
     $css = [];
-    $shared_css = \Drupal::config('webform.settings')->get('assets.css') ?: '';
-    if ($shared_css) {
-      $css[] = $shared_css;
-    }
     $webform_css = $this->css ?: '';
     if ($webform_css) {
       $css[] = $webform_css;
@@ -923,10 +921,6 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
 
     // JavaScript.
     $javascript = [];
-    $shared_javascript = \Drupal::config('webform.settings')->get('assets.javascript') ?: '';
-    if ($shared_javascript) {
-      $javascript[] = $shared_javascript;
-    }
     $webform_javascript = $this->javascript ?: '';
     if ($webform_javascript) {
       $javascript[] = $webform_javascript;

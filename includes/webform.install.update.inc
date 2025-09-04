@@ -4376,3 +4376,19 @@ function webform_update_8644() {
   $file_storage = new FileStorage("$module_path/config/optional");
   $config_storage->write($name, $file_storage->read($name));
 }
+
+/**
+ * Issue #3497954: Excessive memory use when building dynamic library definitions.
+ */
+function webform_update_8645() {
+  /** @var \Drupal\webform\WebformInterface[] $webforms */
+  $webforms = Webform::loadMultiple();
+  $webform_libraries = [];
+  foreach ($webforms as $webform) {
+    $has_assets = array_filter($webform->getAssets());
+    if ($has_assets) {
+      $webform_libraries[$webform->id()] = $webform->id();
+    }
+  }
+  \Drupal::state()->set('webform_libraries', $webform_libraries);
+}
