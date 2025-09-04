@@ -9,6 +9,7 @@ use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\webform\Hook\WebformInstallUpdateHooks;
 use Drupal\Component\Uuid\Php as Uuid;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Database\SchemaObjectExistsException;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -16,6 +17,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\Entity\View;
+use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Element\WebformSignature as WebformSignatureElement;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformOptions;
@@ -4361,4 +4363,16 @@ function webform_update_8642() {
  */
 function webform_update_8643() {
   _webform_update_admin_settings();
+}
+
+/**
+ * Reimport webform filter format to ensure configuration is correct.
+ */
+function webform_update_8644() {
+  /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+  $config_storage = \Drupal::service('config.storage');
+  $module_path = \Drupal::service('extension.list.module')->getPath('webform');
+  $name = 'filter.format.' . WebformHtmlEditor::DEFAULT_FILTER_FORMAT;
+  $file_storage = new FileStorage("$module_path/config/optional");
+  $config_storage->write($name, $file_storage->read($name));
 }
