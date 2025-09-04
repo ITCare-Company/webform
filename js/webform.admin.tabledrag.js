@@ -4,10 +4,6 @@
  */
 
 (function ($, Drupal, once) {
-
-  'use strict';
-
-  // Ensure the tableDrag behavior exists before attaching enhancements.
   if (!Drupal.behaviors.tableDrag) {
     return;
   }
