@@ -320,6 +320,8 @@ function webform_preprocess_form_element(&$variables) {
     return;
   }
 
+  $element = &$variables['element'];
+
   // Setup description, help, and more.
   _webform_preprocess_element($variables, ['label', '#title']);
 
@@ -327,7 +329,6 @@ function webform_preprocess_form_element(&$variables) {
   // #more which is placed in the #description.
   // @see template_preprocess_form_element()
   if (isset($variables['description'])) {
-    $element = &$variables['element'];
     $variables['description_display'] = $element['#description_display'];
   }
 
@@ -369,6 +370,13 @@ function webform_preprocess_form_element(&$variables) {
       }
       $variables['description']['attributes']->addClass('description');
     }
+  }
+
+  // Add .js-webform-form-type-* class to be used JavaScript and #states API.
+  // @see js/webform.states.js
+  if (isset($element['#type'])) {
+    $variables['attributes']['class'][] = 'js-webform-type-' . Html::getClass($element['#type']);
+    $variables['attributes']['class'][] = 'webform-type-' . Html::getClass($element['#type']);
   }
 }
 

@@ -100,7 +100,7 @@ class WebformElementOtherTest extends WebformElementBrowserTestBase {
     /* ********************************************************************** */
 
     // Check form_item wrapper type.
-    $assert_session->responseContains('<div class="js-webform-select-other webform-select-other js-form-item form-item form-type-webform-select-other js-form-type-webform-select-other form-item-wrapper-other-form-element js-form-item-wrapper-other-form-element" id="edit-wrapper-other-form-element">');
+    $assert_session->responseContains('<div class="js-webform-select-other webform-select-other js-webform-type-webform-select-other webform-type-webform-select-other js-form-item form-item form-type-webform-select-other js-form-type-webform-select-other form-item-wrapper-other-form-element js-form-item-wrapper-other-form-element" id="edit-wrapper-other-form-element">');
     // Check container wrapper type.
     $assert_session->responseContains('<div data-drupal-selector="edit-wrapper-other-container" class="js-webform-select-other webform-select-other webform-select-other--wrapper fieldgroup form-composite js-form-wrapper form-wrapper" id="edit-wrapper-other-container">');
   }
