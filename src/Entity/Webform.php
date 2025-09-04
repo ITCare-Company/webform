@@ -1113,6 +1113,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
       'form_access_denied_message' => '',
       'form_access_denied_attributes' => [],
       'form_file_limit' => '',
+      'form_file_limit_message' => '',
       'form_method' => '',
       'form_action' => '',
       'form_attributes' => [],

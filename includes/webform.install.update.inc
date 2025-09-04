@@ -4355,3 +4355,10 @@ function webform_update_8641() {
 function webform_update_8642() {
   _webform_update_webform_handler_settings();
 }
+
+/**
+ * Issue #3543014: Make form_file_limit error message configurable.
+ */
+function webform_update_8643() {
+  _webform_update_admin_settings();
+}

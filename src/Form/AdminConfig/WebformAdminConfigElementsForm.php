@@ -354,6 +354,13 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
       '#size' => 10,
       '#default_value' => $config->get('settings.default_form_file_limit'),
     ];
+    $form['file']['default_form_file_limit_message'] = [
+      '#type' => 'webform_html_editor',
+      '#title' => $this->t('Default file upload limit per form message'),
+      '#description' => $this->t('Enter message to be displayed when file upload limit is reached. You may use %quota as a placeholder.'),
+      '#default_value' => $config->get('settings.default_form_file_limit_message'),
+      '#required' => TRUE,
+    ];
     $file_types = [
       'managed_file' => 'file',
       'audio_file' => 'audio file',
@@ -527,12 +534,14 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
 
     $config->set('html_editor', $form_state->getValue('html_editor'));
 
+    $config->set('format', $format);
+
     $file = $form_state->getValue('file');
     $config->set('settings.default_form_file_limit', $file['default_form_file_limit']);
     unset($file['default_form_file_limit']);
+    $config->set('settings.default_form_file_limit_message', $file['default_form_file_limit_message']);
+    unset($file['default_form_file_limit_message']);
     $config->set('file', $file);
-
-    $config->set('format', $format);
 
     parent::submitForm($form, $form_state);
 
