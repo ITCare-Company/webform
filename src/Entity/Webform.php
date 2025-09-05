@@ -124,8 +124,6 @@ use Drupal\webform\WebformSubmissionStorageInterface;
  *     "third_party_settings",
  *   },
  *   lookup_keys = {
- *     "css",
- *     "javascript",
  *     "status",
  *     "template",
  *   },
