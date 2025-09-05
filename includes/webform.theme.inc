@@ -462,7 +462,16 @@ function webform_preprocess_file_managed_file(&$variables) {
   $element['upload']['#attributes']['class'][] = 'webform-file-button-input';
 
   // Attach library.
-  $element['#attached']['library'][] = 'webform/webform.element.file.button';
+  $element['upload']['#attached']['library'][] = 'webform/webform.element.file.button';
+
+  // Remove #errors to prevent 'aria-invalid' from being added to the
+  // remove file checkbox which is valid.
+  // @see \Drupal\Core\Render\Element\RenderElementBase::setAttributes
+  foreach (Element::children($element) as $child_key) {
+    if (NestedArray::getValue($element, [$child_key, 'selected', '#type']) === 'checkbox') {
+      unset($element[$child_key]['selected']['#errors']);
+    }
+  }
 }
 
 /**
