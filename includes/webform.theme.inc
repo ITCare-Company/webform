@@ -471,12 +471,43 @@ function webform_preprocess_file_managed_file(&$variables) {
  * @see \Drupal\webform\Plugin\WebformElement\WebformManagedFileBase::prepare
  */
 function webform_preprocess_file_upload_help(&$variables) {
-  $validator_help = $variables['upload_validators'];
+  // Retrieve upload validators from file upload element variables.
+  $upload_validators = $variables['upload_validators'];
 
-  if (isset($validator_help['webform_file_limit'])) {
-    $variables['descriptions'][] = t('@size limit per form.', ['@size' => ByteSizeMarkup::create($validator_help['webform_file_limit'])]);
+  // Exit early if no 'webform_file_limit' is set.
+  if (!isset($upload_validators['webform_file_limit'])) {
+    return;
   }
 
+  // Get the webform's overall file size limit and the individual file element's limit.
+  $webform_file_limit = $upload_validators['webform_file_limit'];
+  $element_file_limit = (isset($upload_validators['FileSizeLimit']))
+    ? $upload_validators['FileSizeLimit']['fileLimit']
+    : 0;
+
+  // Prepare translated arguments for the file size descriptions.
+  $t_args = [
+    // Overall size limit for all files.
+    '@webform_file_limit' => ByteSizeMarkup::create($webform_file_limit),
+    // Size limit for individual files.
+    '@element_file_limit' => ByteSizeMarkup::create($element_file_limit),
+  ];
+
+  // Determine the appropriate description based on file size limits.
+  $file_limit_description = ($element_file_limit < $webform_file_limit)
+    // If individual file limit is smaller than the overall limit, include both in the message.
+    ? t('@element_file_limit limit per file. The accumulated size of all files in this form cannot exceed @webform_file_limit.', $t_args)
+    // Otherwise, only mention the overall file size limit.
+    : t('The accumulated size of all files in this form cannot exceed @webform_file_limit.', $t_args);
+
+  // Remove any existing descriptions that match the outdated '@size limit.' message.
+  $descriptions = array_filter(
+    $variables['descriptions'],
+    fn($description) => $file_limit_description->getUntranslatedString() !== '@size limit.'
+  );
+
+  // Add the updated file limit description to the list of descriptions.
+  $variables['descriptions'] = [...$descriptions, $file_limit_description];
 }
 
 /**
