@@ -27,14 +27,14 @@ class WebformAssetsController extends ControllerBase implements ContainerInjecti
    *   The response object.
    */
   public function css(Request $request) {
-    $css = $this->config('webform.settings')->get('assets.css');
+    $config = $this->config('webform.settings');
+    $css = $config->get('assets.css');
     if (empty($css)) {
       return $this->getNotFoundResponse($request);
     }
 
     $response = new CacheableResponse($css, 200, ['Content-Type' => 'text/css']);
-    return $response
-      ->addCacheableDependency($this->config('webform.settings'));
+    return $response->addCacheableDependency($config);
   }
 
   /**
@@ -47,14 +47,14 @@ class WebformAssetsController extends ControllerBase implements ContainerInjecti
    *   The response object.
    */
   public function javascript(Request $request) {
-    $javascript = $this->config('webform.settings')->get('assets.javascript');
+    $config = $this->config('webform.settings');
+    $javascript = $config->get('assets.javascript');
     if (empty($javascript)) {
       return $this->getNotFoundResponse($request);
     }
 
     $response = new CacheableResponse($javascript, 200, ['Content-Type' => 'text/javascript']);
-    return $response
-      ->addCacheableDependency($this->config('webform.settings'));
+    return $response->addCacheableDependency($config);
   }
 
   /**
