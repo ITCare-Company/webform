@@ -469,8 +469,12 @@ trait WebformEntityReferenceTrait {
       $target_type = (!empty($user_input['properties']['target_type'])) ? $user_input['properties']['target_type'] : 'node';
       $selection_handler = (!empty($user_input['properties']['selection_handler'])) ? $user_input['properties']['selection_handler'] : 'default:' . $target_type;
       $selection_settings = (!empty($user_input['properties']['selection_settings'])) ? $user_input['properties']['selection_settings'] : [];
-      // If the default selection handler has changed when need to update its
-      // value.
+      // Split comma-delimited view arguments from user input.
+      if (isset($selection_settings['view']['arguments'])) {
+        $selection_settings['view']['arguments'] = preg_split('/\s*,\s*/', $selection_settings['view']['arguments']);
+      }
+      // If the default selection handler has changed we need to
+      // update its value.
       if (str_starts_with($selection_handler, 'default:') && $selection_handler !== "default:$target_type") {
         $selection_handler = "default:$target_type";
         $selection_settings = [];
