@@ -204,6 +204,9 @@ class WebformNodeAccess {
       elseif (\Drupal::entityTypeManager()->hasDefinition('group_relation')) {
         $is_group_node = \Drupal::entityTypeManager()->getStorage('group_relation')->loadByEntity($node);
       }
+      elseif (\Drupal::entityTypeManager()->hasDefinition('group_relationship')) {
+        $is_group_node = \Drupal::entityTypeManager()->getStorage('group_relationship')->loadByEntity($node);
+      }
     }
 
     // Check the node operation.
