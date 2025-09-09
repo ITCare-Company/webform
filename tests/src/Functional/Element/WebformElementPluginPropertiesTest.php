@@ -459,6 +459,7 @@ datelist:
     - day
     - hour
     - minute
+  date_part_title_display: invisible
   date_text_parts: {  }
   date_year_range: '1900:2050'
   date_year_range_reverse: false
