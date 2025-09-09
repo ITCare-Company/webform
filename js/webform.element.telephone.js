@@ -99,7 +99,7 @@
    *   Returns true if the telephone number is valid; otherwise, false.
    */
   Drupal.webformTelephoneInternationalValidate = function ($telephone, $error) {
-    if (!$telephone.val().trim() || $telephone.intlTelInput('isValidNumber')) {
+    if (!$telephone.val().trim() || $telephone.intlTelInput('isValidNumber') !== false) {
       return true;
     }
 
