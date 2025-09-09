@@ -1419,6 +1419,11 @@ class WebformSubmissionForm extends ContentEntityForm {
 
   /**
    * {@inheritdoc}
+   *
+   * Note: The prioritization of wizard buttons
+   * is page, actions, webform settings, and global configuration.
+   *
+   * @see \Drupal\webform\Element\WebformActions::processWebformActions
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\webform\WebformSubmissionInterface $webform_submission */
@@ -1535,7 +1540,8 @@ class WebformSubmissionForm extends ContentEntityForm {
             $previous_button_custom = TRUE;
           }
           else {
-            $previous_button_label = $this->config('webform.settings')->get('settings.default_wizard_prev_button_label');
+            $previous_button_label = $this->getWebform()->getSetting('wizard_prev_button_label')
+              ?: $this->config('webform.settings')->get('settings.default_wizard_prev_button_label');
             $previous_button_custom = FALSE;
           }
           $element['wizard_prev'] = [
@@ -1577,7 +1583,8 @@ class WebformSubmissionForm extends ContentEntityForm {
             $next_button_custom = TRUE;
           }
           else {
-            $next_button_label = $this->config('webform.settings')->get('settings.default_wizard_next_button_label');
+            $next_button_label = $this->getWebform()->getSetting('wizard_next_button_label')
+              ?: $this->config('webform.settings')->get('settings.default_wizard_next_button_label');
             $next_button_custom = FALSE;
           }
           $element['wizard_next'] = [
