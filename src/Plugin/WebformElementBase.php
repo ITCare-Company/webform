@@ -2898,7 +2898,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     ];
     $form['multiple']['multiple__min_items'] = [
       '#type' => 'number',
-      '#title' => $this->t('Minimum amount of items'),
+      '#title' => $this->t('Minimum amount of items displayed'),
       '#description' => $this->t('Minimum items defaults to 0 for optional elements and 1 for required elements.'),
       '#min' => 0,
       '#max' => 20,
