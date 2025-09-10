@@ -32,7 +32,7 @@ class WebformSubmissionStorageSchema extends SqlContentEntityStorageSchema {
         'sid' => [
           'description' => 'The unique identifier for this submission.',
           'type' => 'int',
-          'unsigned' => TRUE,
+          'unsigned' => FALSE,
           'not null' => TRUE,
         ],
         'name' => [

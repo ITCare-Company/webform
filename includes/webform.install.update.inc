@@ -4460,3 +4460,17 @@ function webform_update_8646() {
     $spec
   );
 }
+
+/**
+ * Issue #3462738: webform_submission and webform_submission_data schema don't match for sid.
+ */
+function webform_update_8647() {
+  $schema = \Drupal::database()->schema();
+  $spec = [
+    'description' => 'The unique identifier for this submission.',
+    'type' => 'int',
+    'unsigned' => FALSE,
+    'not null' => TRUE,
+  ];
+  $schema->changeField('webform_submission_data', 'sid', 'sid', $spec);
+}
