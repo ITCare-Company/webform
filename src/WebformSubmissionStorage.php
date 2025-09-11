@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Entity\TranslatableInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\Utility\Error;
@@ -97,6 +98,13 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
   protected $elementManager;
 
   /**
+   * Route match.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected RouteMatchInterface $routeMatch;
+
+  /**
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
@@ -110,6 +118,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     $instance->entityTypeRepository = $container->get('entity_type.repository');
     $instance->accessRulesManager = $container->get('webform.access_rules_manager');
     $instance->elementManager = $container->get('plugin.manager.webform.element');
+    $instance->routeMatch = $container->get('current_route_match');
     return $instance;
   }
 
@@ -1200,11 +1209,14 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     // Log deleted.
     foreach ($entities as $entity) {
       $webform = $entity->getWebform();
-      $this->loggerFactory->get('webform')
-        ->notice('Deleted @form: Submission #@id.', [
-          '@id' => $entity->id(),
-          '@form' => ($webform) ? $webform->label() : '[' . $this->t('Webform', [], ['context' => 'form']) . ']',
-        ]);
+      // Do not log the deleted webform submissions on batch.
+      if ($this->routeMatch->getRouteName() !== 'system.batch_page.json') {
+        $this->loggerFactory->get('webform')
+          ->notice('Deleted @form: Submission #@id.', [
+            '@id' => $entity->id(),
+            '@form' => ($webform) ? $webform->label() : '[' . $this->t('Webform', [], ['context' => 'form']) . ']',
+          ]);
+      }
     }
 
     return $return;
