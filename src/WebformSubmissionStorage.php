@@ -1271,17 +1271,38 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
         // actually need to query the entire dataset of webform submissions, we
         // are disabling access check.
         $query->accessCheck(FALSE);
-        $query->condition('created', $this->time->getRequestTime() - ($webform->getSetting('purge_days') * $days_to_seconds), '<');
+
         $query->condition('webform_id', $webform->id());
+
+        $purge_timestamp = $this->time->getRequestTime() - ($webform->getSetting('purge_days') * $days_to_seconds);
         switch ($webform->getSetting('purge')) {
           case WebformSubmissionStorageInterface::PURGE_DRAFT:
             $query->condition('in_draft', 1);
+            $query->condition('created', $purge_timestamp, '<');
             break;
 
           case WebformSubmissionStorageInterface::PURGE_COMPLETED:
             $query->condition('in_draft', 0);
+            $query->condition('completed', $purge_timestamp, '<');
+            break;
+
+          default:
+            $query->condition(
+              $query->orConditionGroup()
+                ->condition(
+                  $query->andConditionGroup()
+                    ->condition('in_draft', 1)
+                    ->condition('created', $purge_timestamp, '<')
+                )
+                ->condition(
+                  $query->andConditionGroup()
+                    ->condition('in_draft', 0)
+                    ->condition('completed', $purge_timestamp, '<')
+                )
+            );
             break;
         }
+
         $query->range(0, $remaining);
         $sids = array_values($query->execute());
         if (empty($sids)) {
