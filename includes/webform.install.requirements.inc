@@ -13,11 +13,45 @@ use Drupal\webform\Plugin\WebformElement\ManagedFile;
  * Implements hook_requirements().
  */
 function webform_requirements($phase) {
-  if ($phase !== 'runtime') {
-    return [];
+  $requirements = [];
+
+  // Below requirement are for update.php (update) and the Status Report (runtime).
+  if (in_array($phase, ['update', 'runtime'])) {
+
+    /* ************************************************************************ */
+    // Deprecated modules.
+    /* ************************************************************************ */
+
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
+    $module_extension_list = \Drupal::service('extension.list.module');
+    $modules = \Drupal::configFactory()->get('core.extension')->get('module');
+    $deprecated_modules = [
+      'webform_icheck',
+      'webform_location_geocomplete',
+      'webform_location_places',
+      'webform_shortcuts',
+      'webform_toggles',
+    ];
+    $is_deprecated_module = function ($extension_name) use ($module_extension_list, $deprecated_modules) {
+      return !$module_extension_list->exists($extension_name) && in_array($extension_name, $deprecated_modules);
+    };
+    $deprecated = array_filter(array_keys($modules), $is_deprecated_module);
+    if (!empty($deprecated)) {
+      $requirements['webform_deprecated'] = [
+        'title' => t('Webform deprecated modules'),
+        'value' => t('The following webform sub-modules have been deprecated: @module_list. Please download the <a href=":url">Webform Deprecated</a> project.', [
+          '@module_list' => implode(', ', $deprecated),
+          ':url' => 'https://www.drupal.org/project/webform_deprecated',
+        ]),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
   }
 
-  $requirements = [];
+  // All the remain requirements are for the Status Report (runtime).
+  if ($phase !== 'runtime') {
+    return $requirements;
+  }
 
   /* ************************************************************************ */
   // Experimental modules.
