@@ -19,6 +19,7 @@ class WebformSubmissionDeleteTest extends WebformBrowserTestBase {
     $assert_session = $this->assertSession();
     $own_account = $this->drupalCreateUser([
       'access webform overview',
+      'administer webform overview',
       'create webform',
       'edit own webform',
       'delete own webform',

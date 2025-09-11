@@ -4474,3 +4474,17 @@ function webform_update_8647() {
   ];
   $schema->changeField('webform_submission_data', 'sid', 'sid', $spec);
 }
+
+/**
+ * Issue #3487530 : New permission for filter and bulk action on overview page.
+ */
+function webform_update_8648() {
+  /** @var \Drupal\user\RoleInterface $roles */
+  $roles = \Drupal::entityTypeManager()->getStorage('role')->loadMultiple();
+  foreach ($roles as $role) {
+    if ($role->hasPermission('administer webform')) {
+      $role->grantPermission('administer webform overview');
+      $role->save();
+    }
+  }
+}
