@@ -4480,7 +4480,7 @@ function webform_update_8647() {
  */
 function webform_update_8648() {
   /** @var \Drupal\user\RoleInterface $roles */
-  $roles = \Drupal::entityTypeManager()->getStorage('role')->loadMultiple();
+  $roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
   foreach ($roles as $role) {
     if ($role->hasPermission('administer webform')) {
       $role->grantPermission('administer webform overview');
