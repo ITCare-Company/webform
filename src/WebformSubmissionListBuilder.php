@@ -1371,10 +1371,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         if (isset($default['specified'])) {
           $query->tableSort($header);
         }
-        else {
-          $query->sort('sid', 'DESC');
-        }
       }
+      // Sort by 'sid' to ensure a consistent order of records for batch operations.
+      $query->sort('sid', 'DESC');
       return $query->execute();
     }
   }
