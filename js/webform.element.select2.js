@@ -56,7 +56,7 @@ if (!jQuery.trim) {
           }
           // Allow custom options.
           if ($select.attr('data-options')) {
-            options = $.extend(JSON.parse($input.attr('data-options')), options);
+            options = $.extend(true, options, JSON.parse($input.attr('data-options')));
           }
 
           $select.select2(options);

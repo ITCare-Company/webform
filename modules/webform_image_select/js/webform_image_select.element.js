@@ -49,7 +49,7 @@
 
         // Allow custom options.
         if ($select.attr('data-options')) {
-          options = $.extend(JSON.parse($select.attr('data-options')), options);
+          options = $.extend(true, options, JSON.parse($select.attr('data-options')));
         }
 
         $select.imagepicker(options);
