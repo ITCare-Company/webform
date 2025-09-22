@@ -92,18 +92,16 @@ function webform_requirements($phase) {
       '@module' => $mail_module_name,
       '@plugin_id' => $mail_plugin_id,
     ];
-    if ($mail_plugin_definition) {
-      $t_args += [
-        '@plugin_label' => $mail_plugin_definition['label'],
-        '@plugin_description' => $mail_plugin_definition['description'],
-      ];
-    }
     $requirements['webform_email'] = [
       'title' => t('Webform: HTML email support'),
       'value' => ($mail_module_name) ? t('Provided by the @module module.', $t_args) : t('Provided by the @plugin_id mail plugin.', $t_args),
-      'description' => $mail_plugin_definition ? new FormattableMarkup('@plugin_label: @plugin_description', $t_args) : '',
       'severity' => REQUIREMENT_OK,
     ];
+    if ($mail_plugin_definition) {
+      $requirements['webform_email']['description'] = (!empty($mail_plugin_definition['description']))
+        ? new FormattableMarkup('@plugin_label: @plugin_description', ['@plugin_label' => $mail_plugin_definition['label'], '@plugin_description' => $mail_plugin_definition['description']])
+        : $mail_plugin_definition['label'];
+    }
   }
   else {
     $requirements['webform_email'] = [
