@@ -1361,7 +1361,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     $items_function = 'format' . $type . 'Items';
     if ($this->hasMultipleValues($element)) {
       // Return $options['delta'] which is used by tokens.
-      // @see _webform_token_get_submission_value()
+      // @see \Drupal\webform\Hook\WebformTokensHooks::getSubmissionValue()
       if (isset($options['delta'])) {
         return $this->$item_function($element, $webform_submission, $options);
       }
@@ -1657,7 +1657,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
    * @return string
    *   The element's value formatted as text.
    *
-   * @see _webform_token_get_submission_value()
+   * @see \Drupal\webform\Hook\WebformTokensHooks::getSubmissionValue()
    */
   protected function formatTextItem(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
     $value = $this->getValue($element, $webform_submission, $options);
@@ -1744,7 +1744,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     // Return multiple (delta) value or composite (composite_key) value.
     if (is_array($value)) {
       // Return $options['delta'] which is used by tokens.
-      // @see _webform_token_get_submission_value()
+      // @see \Drupal\webform\Hook\WebformTokensHooks::getSubmissionValue
       if (isset($options['delta'])) {
         $value = $value[$options['delta']] ?? NULL;
       }

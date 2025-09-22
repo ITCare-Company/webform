@@ -27,6 +27,7 @@ require_once __DIR__ . '/includes/webform.form_alter.inc';
 require_once __DIR__ . '/includes/webform.libraries.inc';
 require_once __DIR__ . '/includes/webform.options.inc';
 require_once __DIR__ . '/includes/webform.theme.inc';
+require_once __DIR__ . '/includes/webform.tokens.inc';
 require_once __DIR__ . '/includes/webform.translation.inc';
 require_once __DIR__ . '/includes/webform.query.inc';
 

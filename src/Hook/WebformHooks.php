@@ -279,7 +279,7 @@ class WebformHooks {
       '<li>' . $this->t('<code>:htmldecode</code> decodes HTML entities in returned value.') . '<br/><b>' . $this->t('This suffix has security implications.') . '</b><br/>' . $this->t('Use <code>:htmldecode</code> with <code>:striptags</code>.') . '</li>' .
       '<li>' . $this->t('<code>:striptags</code> removes all HTML tags from returned value.') . '</li>' .
     '</ul>';
-    $more = _webform_token_render_more(t('Learn about token suffixes'), $token_suffixes);
+    $more = \Drupal::service(WebformTokensHooks::class)->renderMore(t('Learn about token suffixes'), $token_suffixes);
     foreach ($data['types'] as $type => &$info) {
       if (str_starts_with($type, 'webform')) {
         if (isset($info['description']) && !empty($info['description'])) {
