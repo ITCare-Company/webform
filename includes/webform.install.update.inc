@@ -30,6 +30,7 @@ use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\Utility\WebformReflectionHelper;
 use Drupal\webform\Utility\WebformYaml;
 use Drupal\webform\WebformInterface;
+use Drupal\webform\WebformSubmissionStorageSchema;
 
 /**
  * Implements hook_update_dependencies().
@@ -4487,4 +4488,19 @@ function webform_update_8648() {
       $role->save();
     }
   }
+}
+
+/**
+ * Issue #3484204: Adds new index to the 'webform_id' and 'name' in the 'webform_submission_data' table.
+ */
+function webform_update_8649() {
+  $manager = \Drupal::entityDefinitionUpdateManager();
+
+  // Get the current webform_submission entity type definition,
+  // ensure the storage schema class is set.
+  $entity_type = $manager->getEntityType('webform_submission')
+    ->setHandlerClass('storage_schema', WebformSubmissionStorageSchema::class);
+
+  // Regenerate entity type indexes.
+  $manager->updateEntityType($entity_type);
 }
