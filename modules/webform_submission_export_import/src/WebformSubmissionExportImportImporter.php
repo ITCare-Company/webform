@@ -398,8 +398,10 @@ class WebformSubmissionExportImportImporter implements WebformSubmissionExportIm
     // Fast forward CSV file to offset.
     $index = 0;
     while ($index < $offset && !feof($handle)) {
-      fgets($handle);
-      $index++;
+      $line = fgetcsv($handle);
+      if (!empty($line) && !is_null(array_pop($line))) {
+        $index++;
+      }
     }
 
     // Collect import stats.
