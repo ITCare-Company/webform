@@ -16,6 +16,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\Plugin\WebformElement\ManagedFile;
 use Drupal\webform\Plugin\WebformElementFileDownloadAccessInterface;
+use Drupal\webform\Plugin\WebformVariant\OverrideWebformVariant;
 use Drupal\webform\Utility\WebformMailHelper;
 use Drupal\webform\WebformInterface;
 
@@ -130,15 +131,23 @@ class WebformHooks {
     if (empty($definitions['webform.webform.*']['mapping'])) {
       return;
     }
+
     $mapping = $definitions['webform.webform.*']['mapping'];
-    // Copy setting, elements, and handlers to variant override schema.
+
+    // Copy properties, settings, elements, and handlers to variant override schema.
     if (isset($definitions['webform.variant.override'])) {
       $definitions['webform.variant.override']['mapping'] += [
+        'properties' => [
+          'type' => 'mapping',
+          'label' => 'Properties',
+          'mapping' => array_intersect_key($mapping, array_flip(OverrideWebformVariant::OVERRIDE_PROPERTIES)),
+        ],
         'settings' => $mapping['settings'],
         'elements' => $mapping['elements'],
         'handlers' => $mapping['handlers'],
       ];
     }
+
     // Append settings handler settings schema.
     if (isset($definitions['webform.handler.settings'])) {
       $definitions['webform.handler.settings']['mapping'] += _webform_config_schema_info_alter_settings_recursive($mapping['settings']['mapping']);
