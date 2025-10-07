@@ -6,6 +6,7 @@ use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\OptGroup;
@@ -870,14 +871,15 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
    * Wrap #element_validate so that we suppress element validation errors.
    */
   public static function hiddenElementAfterBuild(array $element, FormStateInterface $form_state) {
-    if (!isset($element['#access']) || $element['#access']) {
-      return $element;
+    $access = $element['#access'] ?? TRUE;
+
+    // If #access is boolean FALSE, or an AccessResult that is not allowed.
+    if (($access instanceof AccessResultInterface && !$access->isAllowed()) || $access === FALSE) {
+      $element['#required'] = FALSE;
+      return WebformElementHelper::setElementValidate($element);
     }
-
-    // Disabled #required validation for hidden elements.
-    $element['#required'] = FALSE;
-
-    return WebformElementHelper::setElementValidate($element);
+    // If access is TRUE or allowed, just return as is.
+    return $element;
   }
 
   /**
