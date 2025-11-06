@@ -1026,7 +1026,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     if (isset($element['#multiple']) && $element['#multiple'] > 1) {
       $element['#element_validate'][] = [get_class($this), 'validateMultiple'];
     }
-    if (isset($element['#unique']) && $webform_submission) {
+    if (!empty($element['#unique']) && $webform_submission) {
       $element['#element_validate'][] = [get_class($this), 'validateUnique'];
     }
   }
@@ -1204,7 +1204,7 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
     $element = array_diff_key($element, array_flip(['#attributes', '#field_prefix', '#field_suffix', '#pattern', '#placeholder', '#maxlength', '#element_validate', '#pre_render']));
 
     // Apply #unique multiple validation.
-    if (isset($element['#unique'])) {
+    if (!empty($element['#unique'])) {
       $element['#element_validate'][] = [get_class($this), 'validateUniqueMultiple'];
     }
   }
