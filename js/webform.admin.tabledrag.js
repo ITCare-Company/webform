@@ -42,9 +42,13 @@
             var tableDrag = Drupal.tableDrag[table.id];
             var rowObject = new tableDrag.row(row, 'mouse', tableDrag.indentEnabled, tableDrag.maxDepth, true);
 
-            // Mark the table row as changed and display a warning.
+            // Mark the table row as changed.
             rowObject.markChanged();
-            rowObject.addChangedWarning();
+            // Display table drag row changed warning once.
+            if (!tableDrag.changed) {
+              rowObject.addChangedWarning();
+              tableDrag.changed = true;
+            }
           });
       });
     }
