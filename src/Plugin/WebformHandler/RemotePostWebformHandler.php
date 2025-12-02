@@ -733,7 +733,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
    */
   protected function castRequestValue(array $element, WebformElementInterface $element_plugin, $value) {
     if ($element_plugin instanceof BooleanBase) {
-      return (boolean) $value;
+      return (bool) $value;
     }
     elseif ($element_plugin instanceof NumericBase) {
       return (float) $value;
