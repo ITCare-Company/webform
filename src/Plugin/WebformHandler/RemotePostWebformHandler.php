@@ -329,9 +329,9 @@ class RemotePostWebformHandler extends WebformHandlerBase {
       '<br/>' .
       $this->t('For custom data, the casts allowed are:') .
       '<ul>' .
-      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(int), (integer)', '@type' => 'integer']) . '</li>' .
-      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(float), (double), (real)', '@type' => 'float']) . '</li>' .
-      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(bool), (boolean)', '@type' => 'boolean']) . '</li>' .
+      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(int)', '@type' => 'integer']) . '</li>' .
+      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(float)', '@type' => 'float']) . '</li>' .
+      '<li>' . $this->t('@cast - cast to @type', ['@cast' => '(bool)', '@type' => 'boolean']) . '</li>' .
       '</ul>',
       '#return_value' => TRUE,
       '#default_value' => $this->configuration['cast'],
