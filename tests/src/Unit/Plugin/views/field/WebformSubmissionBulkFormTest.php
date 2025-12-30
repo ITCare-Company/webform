@@ -101,7 +101,7 @@ class WebformSubmissionBulkFormTest extends UnitTestCase {
     $webform_submission_bulk_form = new WebformSubmissionBulkForm([], 'webform_submission_bulk_form', $definition, $entity_manager, $language_manager, $messenger, $entity_repository);
     $webform_submission_bulk_form->init($executable, $display, $options);
 
-    $this->assertAttributeEquals(array_slice($actions, 0, -1, TRUE), 'actions', $webform_submission_bulk_form);
+    $this->assertEquals(array_slice($actions, 0, -1, TRUE), $webform_submission_bulk_form->actions);
   }
 
 }
