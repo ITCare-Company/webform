@@ -4,6 +4,7 @@ namespace Drupal\Tests\webform\Unit\Plugin\views\field;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\webform\Plugin\views\field\WebformSubmissionBulkForm;
 
@@ -61,7 +62,7 @@ class WebformSubmissionBulkFormTest extends UnitTestCase {
       ->method('loadMultiple')
       ->willReturn($actions);
 
-    $entity_manager = $this->createMock('Drupal\Core\Entity\EntityManagerInterface');
+    $entity_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_manager->expects($this->once())
       ->method('getStorage')
       ->with('action')
