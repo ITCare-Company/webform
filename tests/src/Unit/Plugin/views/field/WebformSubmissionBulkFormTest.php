@@ -5,6 +5,7 @@ namespace Drupal\Tests\webform\Unit\Plugin\views\field;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\webform\Plugin\views\field\WebformSubmissionBulkForm;
 
@@ -70,6 +71,8 @@ class WebformSubmissionBulkFormTest extends UnitTestCase {
 
     $entity_repository = $this->createMock(EntityRepositoryInterface::class);
 
+    $route_match = $this->createMock(ResettableStackedRouteMatchInterface::class);
+
     $language_manager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
 
     $messenger = $this->createMock('\Drupal\Core\Messenger\MessengerInterface');
@@ -98,7 +101,7 @@ class WebformSubmissionBulkFormTest extends UnitTestCase {
     $definition['title'] = '';
     $options = [];
 
-    $webform_submission_bulk_form = new WebformSubmissionBulkForm([], 'webform_submission_bulk_form', $definition, $entity_manager, $language_manager, $messenger, $entity_repository);
+    $webform_submission_bulk_form = new WebformSubmissionBulkForm([], 'webform_submission_bulk_form', $definition, $entity_manager, $language_manager, $messenger, $entity_repository, $route_match);
     $webform_submission_bulk_form->init($executable, $display, $options);
 
     $this->assertEquals(array_slice($actions, 0, -1, TRUE), $webform_submission_bulk_form->actions);
