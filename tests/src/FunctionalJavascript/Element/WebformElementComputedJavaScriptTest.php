@@ -46,12 +46,13 @@ class WebformElementComputedJavaScriptTest extends WebformWebDriverTestBase {
     // fillField does not fire a change event on number fields.
     // selectFieldOption fires change which triggers the computed
     // element's 500ms debounce AJAX.
-    $page->fillField('b', '1');
+    $random = rand(1, 9);
+    $page->fillField('b', $random);
     $page->selectFieldOption('a[select]', '1');
 
     // Wait for the debounce-triggered AJAX to update the specific
     // hidden field with the computed value.
-    $result = $session->wait(5000, "document.querySelector('input[name=\"webform_computed_twig\"]').value === '1 + 1 = 2'");
+    $result = $session->wait(5000, "document.querySelector('input[name=\"webform_computed_twig\"]').value === '1 + " . $random . ' = ' . ($random + 1) . "'");
     $this->assertTrue($result, 'Computed Twig value was not updated via AJAX.');
   }
 
