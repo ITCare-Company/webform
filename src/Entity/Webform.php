@@ -1837,6 +1837,11 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
    * {@inheritdoc}
    */
   public function getElement($key, $include_children = FALSE) {
+    // @todo This should probably not ever be NULL. Figure out why and fix.
+    // Setting to empty string to preserve existing behavior but prevent NULL
+    // from being used as an array key.
+    $key ??= '';
+
     $elements_flattened = $this->getElementsInitializedAndFlattened();
     $element = $elements_flattened[$key] ?? NULL;
     if ($element && $include_children) {
