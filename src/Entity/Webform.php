@@ -2125,6 +2125,11 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
    * {@inheritdoc}
    */
   public function getPage($operation, $key) {
+    // @todo This should probably not ever be NULL. Figure out why and fix.
+    // Setting to empty string to preserve existing behavior but prevent NULL
+    // from being used as an array key.
+    $key ??= '';
+
     $pages = $this->getPages($operation);
     return $pages[$key] ?? NULL;
   }
