@@ -228,6 +228,12 @@ function webform_requirements($phase) {
       'description' => t('Mitigates spam form submissions using the honeypot method.'),
     ];
 
+    // Spam: Cleantalk.
+    $projects['cleantalk'] = [
+      'title' => t('Cleantalk'),
+      'description' => t('Protects forms from spam and bots without CAPTCHA.'),
+    ];
+
     foreach ($projects as $project_name => $project) {
       $project['url'] = Url::fromUri('https://www.drupal.org/project/' . $project_name);
       $available_projects[$project_name] = [
