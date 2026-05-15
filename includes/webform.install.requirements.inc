@@ -219,7 +219,7 @@ function webform_requirements($phase) {
     // Spam: reCAPTCHA.
     $projects['recaptcha'] = [
       'title' => t('reCAPTCHA'),
-      'description' => t('Uses the Google <a href=":href">reCAPTCHA</a> web service to improve the CAPTCHA system.', [':href' => 'https://www.google.com/recaptcha/about/']),
+      'description' => t('Uses the Google <a href=":href">reCAPTCHA</a> web service to improve the CAPTCHA system.', [':href' => 'https://cloud.google.com/security/products/recaptcha']),
     ];
 
     // Spam: Honeypot.
