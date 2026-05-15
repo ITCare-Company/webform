@@ -2020,6 +2020,11 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
    * {@inheritdoc}
    */
   public function getPages($operation = 'default', ?WebformSubmissionInterface $webform_submission = NULL) {
+    // @todo This should probably not ever be NULL. Figure out why and fix.
+    // Setting to empty string to preserve existing behavior but prevent NULL
+    // from being used as an array key.
+    $operation ??= '';
+
     $pages = $this->buildPages($operation);
     if ($this->getSetting('wizard_progress_states') && $webform_submission) {
       /** @var \Drupal\webform\WebformSubmissionConditionsValidatorInterface $constraint_validator */
