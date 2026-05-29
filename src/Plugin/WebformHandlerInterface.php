@@ -111,7 +111,7 @@ interface WebformHandlerInterface extends PluginInspectionInterface, Configurabl
   /**
    * Sets the id for this webform handler.
    *
-   * @param int $handler_id
+   * @param string $handler_id
    *   The handler_id for this webform handler.
    *
    * @return $this
