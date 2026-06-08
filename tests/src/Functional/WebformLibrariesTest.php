@@ -26,7 +26,7 @@ class WebformLibrariesTest extends WebformBrowserTestBase {
   /**
    * Tests webform libraries.
    */
-  public function testLibraries() {
+  public function testLibraries(): void {
     $assert_session = $this->assertSession();
 
     $optional_properties = [

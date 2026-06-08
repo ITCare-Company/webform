@@ -22,7 +22,7 @@ class WebformCardsProgressJavaScriptTest extends WebformWebDriverTestBase {
   /**
    * Test webform cards progress.
    */
-  public function testProgress() {
+  public function testProgress(): void {
     $session = $this->getSession();
     $page = $session->getPage();
     $assert_session = $this->assertSession();
