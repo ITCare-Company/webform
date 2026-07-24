@@ -626,7 +626,7 @@ class WebformSubmissionExportImportUploadForm extends ConfirmFormBase {
     }
 
     // Context results are not being passed to batchFinish via Drush,
-    // therefor we are going to show them when this is finished.
+    // therefore we are going to show them when this is finished.
     if ($context['finished'] >= 1) {
       static::displayStats($context['sandbox']['stats']);
     }
