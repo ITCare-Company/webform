@@ -9,6 +9,11 @@
   title: 'Access the webform user submission page'
   description: 'Allows a user to view their submissions via ''Submissions'' tab on their profile page.'
 
+'access webform submission export import':
+  title: 'Access webform submission export/import'
+  description: 'Allows users to upload and download webform submission export/import files.'
+  restrict access: true
+
 'administer webform':
   title: 'Administer webforms'
   description: 'Allows administration of global YAML configuration and options.'
