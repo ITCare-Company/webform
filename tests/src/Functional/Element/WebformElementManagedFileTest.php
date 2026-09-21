@@ -3,6 +3,7 @@
 namespace Drupal\Tests\webform\Functional\Element;
 
 use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -144,6 +145,54 @@ class WebformElementManagedFileTest extends WebformElementManagedFileTestBase {
     $this->postSubmission($webform);
     $assert_session->responseContains('<h2 class="visually-hidden">Error message</h2>');
     $assert_session->responseContains('{Custom required error}');
+  }
+
+  /**
+   * Test managed file tamper protection.
+   */
+  public function testFileUploadTampering(): void {
+    $webform = Webform::load('test_element_managed_file');
+
+    // Check that a tampered hidden fid is not saved to the submission.
+    $this->drupalGet('/webform/test_element_managed_file');
+    $this->submitForm([
+      'files[managed_file_single]' => \Drupal::service('file_system')->realpath($this->files[0]->uri),
+    ], 'Upload');
+
+    $tampered_file = $this->createPermanentManagedFile($this->files[1]->uri);
+    $tampered_fid = (int) $tampered_file->id();
+
+    $this->getSession()
+      ->getPage()
+      ->find('css', 'input[name="managed_file_single[fids]"]')
+      ->setValue((string) $tampered_fid);
+    $this->submitForm([], 'Submit');
+
+    $this->assertSession()->responseContains('The uploaded file is invalid.');
+    $this->assertEmpty($this->getLastSubmissionId($webform));
+
+    // Check that a tampered temporary fid is not displayed after an upload.
+    $tampered_file = File::create([
+      'uri' => $this->files[1]->uri,
+      'filename' => basename($this->files[1]->uri),
+      'uid' => 0,
+      'status' => 0,
+    ]);
+    $tampered_file->setTemporary();
+    $tampered_file->save();
+    $tampered_fid = (int) $tampered_file->id();
+
+    $this->drupalGet('/webform/test_element_managed_file');
+    $this->getSession()
+      ->getPage()
+      ->find('css', 'input[name="managed_file_multiple[fids]"]')
+      ->setValue((string) $tampered_fid);
+    $this->submitForm([
+      'files[managed_file_multiple][]' => \Drupal::service('file_system')->realpath($this->files[0]->uri),
+    ], 'Upload');
+
+    // Check that the tampered temporary file is not displayed.
+    $this->assertSession()->responseNotContains($tampered_file->getFilename());
   }
 
   /**
@@ -398,6 +447,27 @@ class WebformElementManagedFileTest extends WebformElementManagedFileTestBase {
 
     // Check that empty file directory was deleted.
     $this->assertFileDoesNotExist('private://webform/test_element_managed_file/' . $sid . '/');
+  }
+
+  /**
+   * Create a permanent managed file entity.
+   *
+   * @param string $uri
+   *   A file URI.
+   *
+   * @return \Drupal\file\FileInterface
+   *   A permanent managed file.
+   */
+  protected function createPermanentManagedFile(string $uri): FileInterface {
+    $file = File::create([
+      'uri' => $uri,
+      'filename' => basename($uri),
+      'uid' => 0,
+      'status' => 1,
+    ]);
+    $file->setPermanent();
+    $file->save();
+    return $file;
   }
 
 }
