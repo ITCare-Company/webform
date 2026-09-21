@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\webform\Functional\Handler;
 
-use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 use Drupal\file\Entity\File;
+use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
 
@@ -207,6 +207,50 @@ options:
     $this->postSubmission($webform, ['response_type' => 200]);
     $assert_session->responseContains('This is a custom 200 success message.');
     $assert_session->responseContains('Processed completed request.');
+
+    $handler = $webform->getHandler('remote_post');
+    $messages = $handler->getSetting('messages');
+    foreach ($messages as &$message) {
+      if ((int) $message['code'] === 200) {
+        $message['message'] = 'This is a response token [webform:handler:remote_post:unsafe_markup]';
+      }
+    }
+    unset($message);
+    $handler
+      ->setSetting('completed_custom_data', "custom_completed: true\nunsafe_markup: '<em>Allowed handler response markup</em><img src=x onerror=unsafeHandlerResponse()>'")
+      ->setSetting('messages', $messages);
+    $webform->save();
+
+    /** @var \Drupal\webform\WebformTokenManagerInterface $token_manager */
+    $token_manager = \Drupal::service('webform.token_manager');
+    $token_data = [
+      'webform_handler' => [
+        'remote_post' => [
+          'unsafe_markup' => '<em>Allowed handler response markup</em><img src=x onerror=unsafeHandlerResponse()>',
+        ],
+      ],
+    ];
+
+    // Check that unsafe remote post response token markup is filtered directly.
+    $token_result = $token_manager->replaceNoRenderContext('[webform:handler:remote_post:unsafe_markup]', $webform, $token_data);
+    $this->assertStringContainsString('<em>Allowed handler response markup</em>', (string) $token_result);
+    $this->assertStringNotContainsString('onerror=unsafeHandlerResponse()', (string) $token_result);
+
+    // Check that unsafe remote post response token markup is filtered.
+    $this->postSubmission($webform, ['response_type' => 200]);
+    $assert_session->responseContains('This is a response token <em>Allowed handler response markup</em>');
+    $assert_session->responseNotContains('This is a response token <em>Allowed handler response markup</em><img src="x" onerror=unsafeHandlerResponse()>');
+
+    foreach ($messages as &$message) {
+      if ((int) $message['code'] === 200) {
+        $message['message'] = 'This is a custom 200 success message.';
+      }
+    }
+    unset($message);
+    $webform->getHandler('remote_post')
+      ->setSetting('completed_custom_data', "custom_completed: true")
+      ->setSetting('messages', $messages);
+    $webform->save();
 
     // Check 500 Internal Server Error.
     $this->postSubmission($webform, ['response_type' => '500']);
