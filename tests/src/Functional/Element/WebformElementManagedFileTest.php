@@ -2,10 +2,12 @@
 
 namespace Drupal\Tests\webform\Functional\Element;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
+use Drupal\webform\Plugin\WebformElement\WebformManagedFileBase;
 
 /**
  * Test for webform element managed file handling.
@@ -338,10 +340,70 @@ class WebformElementManagedFileTest extends WebformElementManagedFileTestBase {
     $this->assertEquals(0, \Drupal::database()->query('SELECT COUNT(fid) AS total FROM {file_usage}')->fetchField());
   }
 
+  /**
+   * Test that browser-renderable file types are downloaded.
+   */
+  public function testFileDownloadMimeTypes() {
+    $this->drupalLogin($this->rootUser);
+
+    $webform = Webform::load('test_element_managed_file');
+    $sid = $this->postSubmissionTest($webform);
+    $submission = WebformSubmission::load($sid);
+
+    $download_files = [
+      'application/xhtml+xml' => $this->createSubmissionFile('test.xhtml', '<html><body>Test XHTML</body></html>', $submission),
+      'application/rdf+xml' => $this->createSubmissionFile('test.rdf', '<rdf:RDF></rdf:RDF>', $submission),
+      'application/atom' => $this->createSubmissionFile('test.atom', '<feed></feed>', $submission),
+      'application/xslt+xml' => $this->createSubmissionFile('test.xslt', '<xsl:stylesheet></xsl:stylesheet>', $submission, 'application/xslt+xml'),
+      'text/xml' => $this->createSubmissionFile('test.text-xml', '<root></root>', $submission, 'text/xml'),
+    ];
+
+    foreach ($download_files as $mime_type => $file) {
+      $headers = WebformManagedFileBase::accessFileDownload($file->getFileUri());
+
+      // Check that browser-renderable files are downloaded.
+      $this->assertEquals($mime_type, $headers['Content-Type']);
+      $this->assertStringStartsWith('attachment;', $headers['Content-Disposition']);
+    }
+  }
+
   /* ************************************************************************ */
   // Helper functions.
   // @see \Drupal\file\Tests\FileFieldTestBase::getTestFile
   /* ************************************************************************ */
+
+  /**
+   * Create a file associated with a webform submission.
+   *
+   * @param string $filename
+   *   The file name.
+   * @param string $data
+   *   The file data.
+   * @param \Drupal\webform\Entity\WebformSubmission $submission
+   *   A webform submission.
+   * @param string|null $mime_type
+   *   The optional mime type.
+   *
+   * @return \Drupal\file\FileInterface
+   *   A file entity.
+   */
+  protected function createSubmissionFile(string $filename, string $data, WebformSubmission $submission, ?string $mime_type = NULL): FileInterface {
+    $directory = 'private://webform/test_element_managed_file/' . $submission->id();
+    \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY);
+    $uri = \Drupal::service('file_system')->saveData($data, "$directory/$filename");
+    $file = File::create([
+      'uri' => $uri,
+      'uid' => $this->rootUser->id(),
+      'status' => 1,
+    ]);
+    if ($mime_type) {
+      $file->setMimeType($mime_type);
+    }
+    $file->save();
+    $this->fileUsage->add($file, 'webform', 'webform_submission', $submission->id());
+
+    return $file;
+  }
 
   /**
    * Check file upload.

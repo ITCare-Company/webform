@@ -45,10 +45,11 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
    * @var array
    */
   protected static $downloadMimeTypes = [
+    'application/atom',
     'application/pdf',
     'application/xml',
-    'image/svg+xml',
     'text/html',
+    'text/xml',
   ];
 
   /**
@@ -1481,7 +1482,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
       $illegal_characters = '/[%#&{}\<>*?\/ $!\'":@+`|=]/';
       $filename_fallback = preg_replace($illegal_characters, '', $filename_fallback);
       // Force some files to be downloaded instead of opening in the browser.
-      if (in_array($headers['Content-Type'], static::$downloadMimeTypes)) {
+      if (static::isDownloadMimeType($headers['Content-Type'])) {
         $headers['Content-Disposition'] = HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, (string) $filename, $filename_fallback);
       }
       else {
@@ -1495,6 +1496,19 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
     else {
       return NULL;
     }
+  }
+
+  /**
+   * Determine if a mime type should always be downloaded.
+   *
+   * @param string $mime_type
+   *   The mime type.
+   *
+   * @return bool
+   *   TRUE if the mime type should always be downloaded.
+   */
+  protected static function isDownloadMimeType(string $mime_type): bool {
+    return in_array($mime_type, static::$downloadMimeTypes) || str_ends_with($mime_type, '+xml');
   }
 
   /**
