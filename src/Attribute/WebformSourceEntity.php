@@ -45,8 +45,16 @@ class WebformSourceEntity extends Plugin {
     public readonly TranslatableMarkup $label,
     public readonly TranslatableMarkup|string $description = '',
     public readonly int $weight = 0,
-    public readonly array $dependencies = [],
+    array $dependencies = [],
     public readonly ?string $deriver = NULL,
-  ) {}
+  ) {
+    // AttributeBase already declares a non-readonly $dependencies property
+    // (for the attribute class's own class/interface/provider dependencies);
+    // redeclaring it here as readonly fatals ("Cannot redeclare non-readonly
+    // property ... as readonly"). Use the inherited setter instead of
+    // promoting the parameter, so the 'dependencies' array key in the
+    // resulting plugin definition is unchanged for existing consumers.
+    $this->setDependencies($dependencies);
+  }
 
 }
