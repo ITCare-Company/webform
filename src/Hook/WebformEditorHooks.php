@@ -41,7 +41,10 @@ class WebformEditorHooks {
    */
   #[Hook('webform_update')]
   public function webformUpdate(WebformInterface $webform) {
-    $original_uuids = _webform_get_config_entity_file_uuids($webform->original);
+    // D12: EntityBase::$original was renamed to $originalEntity with no BC
+    // magic getter (change record 3295826) — use getOriginal() when present.
+    $original = method_exists($webform, 'getOriginal') ? $webform->getOriginal() : $webform->original;
+    $original_uuids = _webform_get_config_entity_file_uuids($original);
     $uuids = _webform_get_config_entity_file_uuids($webform);
     // Detect file usages that should be incremented.
     $added_files = array_diff($uuids, $original_uuids);

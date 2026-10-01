@@ -98,7 +98,10 @@ class WebformEntityStorage extends ConfigEntityStorage implements WebformEntityS
    * {@inheritdoc}
    */
   protected function doPostSave(EntityInterface $entity, $update) {
-    if ($update && $entity->getAccessRules() !== $entity->original->getAccessRules()) {
+    // D12: EntityBase::$original was renamed to $originalEntity with no BC
+    // magic getter (change record 3295826) — use getOriginal() when present.
+    $original = method_exists($entity, 'getOriginal') ? $entity->getOriginal() : $entity->original;
+    if ($update && $entity->getAccessRules() !== $original->getAccessRules()) {
       // Invalidate webform_submission listing cache tags because due to the
       // change in access rules of this webform, some listings might have
       // changed for users.
