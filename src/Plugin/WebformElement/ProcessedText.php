@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Plugin\WebformElement;
 
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\webform\WebformSubmissionInterface;
@@ -45,9 +46,9 @@ class ProcessedText extends WebformMarkupBase {
       // Works around filter_default_format() throwing fatal error when
       // user is not allowed to use any filter formats.
       // @see filter_default_format.
-      $formats = filter_formats($this->currentUser);
+      $formats = DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\filter\FilterFormatRepositoryInterface')->getFormatsForAccount($this->currentUser), fn() => filter_formats($this->currentUser));
       $format = reset($formats);
-      $default_format = $format ? $format->id() : filter_fallback_format();
+      $default_format = $format ? $format->id() : DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\filter\FilterFormatRepositoryInterface')->getFallbackFormatId(), fn() => filter_fallback_format());
     }
     else {
       $default_format = '';

@@ -196,7 +196,7 @@ class WebformAdminConfigElementsForm extends WebformAdminConfigBaseForm {
     ];
     $format_options = [];
     $format_options[WebformHtmlEditor::DEFAULT_FILTER_FORMAT] = $this->t('- Default -');
-    $filters = filter_formats();
+    $filters = DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\filter\FilterFormatRepositoryInterface')->getAllFormats(), fn() => filter_formats());
     unset($filters[WebformHtmlEditor::DEFAULT_FILTER_FORMAT]);
     foreach ($filters as $filter) {
       $format_options[$filter->id()] = $filter->label();

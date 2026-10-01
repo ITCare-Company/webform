@@ -3,6 +3,7 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Component\Utility\Bytes;
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Environment;
 use Drupal\Component\Utility\Html;
@@ -1473,7 +1474,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
     $access = static::accessFile($file);
     if ($access === TRUE) {
       // Return file content headers.
-      $headers = file_get_content_headers($file);
+      $headers = DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.2.0', fn() => $file->getDownloadHeaders(), fn() => file_get_content_headers($file));
 
       $filename = \basename($uri);
       // Fallback name in case file name contains none ASCII characters.

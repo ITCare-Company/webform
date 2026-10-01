@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Plugin\WebformElement;
 
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -143,7 +144,7 @@ class WebformImageFile extends WebformManagedFileBase {
     if ($this->moduleHandler->moduleExists('image')) {
       $form['image']['attachment_image_style'] = [
         '#type' => 'select',
-        '#options' => image_style_options(),
+        '#options' => DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\image\ImageDerivativeUtilities')->styleOptions(), fn() => image_style_options()),
         '#title' => $this->t('Attachment image style'),
         '#description' => $this->t('Use this to send image with image style when sending files as attachment in an email handler.'),
       ];

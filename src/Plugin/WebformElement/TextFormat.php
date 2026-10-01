@@ -3,6 +3,7 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Render\Element;
@@ -72,7 +73,7 @@ class TextFormat extends WebformElementBase {
     // @see \Drupal\filter\Element\TextFormat::processFormat
     if (isset($element['#allowed_formats'])) {
       $formats = array_intersect_key(
-        filter_formats($this->currentUser),
+        DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\filter\FilterFormatRepositoryInterface')->getFormatsForAccount($this->currentUser), fn() => filter_formats($this->currentUser)),
         array_flip($element['#allowed_formats'])
       );
       if (empty($formats)) {
@@ -248,11 +249,20 @@ class TextFormat extends WebformElementBase {
         return $value;
 
       case 'value':
-        $default_format = filter_default_format(User::load($webform_submission->getOwnerId()));
-        return check_markup($value, $default_format);
+        $account = User::load($webform_submission->getOwnerId());
+        $default_format = DeprecationHelper::backwardsCompatibleCall(\Drupal::VERSION, '11.4.0', fn() => \Drupal::service('Drupal\filter\FilterFormatRepositoryInterface')->getDefaultFormat($account)->id(), fn() => filter_default_format($account));
+        return [
+          '#type' => 'processed_text',
+          '#text' => $value,
+          '#format' => $default_format,
+        ];
 
       default:
-        return check_markup($value, $format);
+        return [
+          '#type' => 'processed_text',
+          '#text' => $value,
+          '#format' => $format,
+        ];
     }
   }
 
