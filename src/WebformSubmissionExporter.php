@@ -141,7 +141,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
    * @param \Drupal\Core\Language\LanguageManagerInterface|null $language_manager
    *   The language manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, StreamWrapperManagerInterface $stream_wrapper_manager, ArchiverManager $archiver_manager, WebformElementManagerInterface $element_manager, WebformExporterManagerInterface $exporter_manager, ?LanguageManagerInterface $language_manager = NULL) {
+  public function __construct(ConfigFactoryInterface $config_factory, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, StreamWrapperManagerInterface $stream_wrapper_manager, ?ArchiverManager $archiver_manager, WebformElementManagerInterface $element_manager, WebformExporterManagerInterface $exporter_manager, ?LanguageManagerInterface $language_manager = NULL) {
     $this->configFactory = $config_factory;
     $this->fileSystem = $file_system;
     $this->entityTypeManager = $entity_type_manager;
