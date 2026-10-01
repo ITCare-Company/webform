@@ -875,9 +875,12 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
     // cache we have to reset it for the original webform submission entity.
     // @see \Drupal\Core\Entity\EntityStorageBase::doPreSave
     // @see \Drupal\Core\Entity\ContentEntityStorageBase::getFromPersistentCache
-    if (isset($this->original)) {
-      $this->original->setData($this->originalData);
-      $this->original->setOriginalData($this->original->getData());
+    // D12: EntityBase::$original was renamed to $originalEntity with no BC
+    // magic getter (change record 3295826) -- use getOriginal() when present.
+    $original_entity = method_exists($this, 'getOriginal') ? $this->getOriginal() : $this->original;
+    if (isset($original_entity)) {
+      $original_entity->setData($this->originalData);
+      $original_entity->setOriginalData($original_entity->getData());
     }
 
     $request_time = \Drupal::time()->getRequestTime();
