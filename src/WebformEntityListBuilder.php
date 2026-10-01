@@ -2,6 +2,7 @@
 
 namespace Drupal\webform;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -399,7 +400,7 @@ class WebformEntityListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity, $type = 'edit') {
+  public function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
     /** @var \Drupal\webform\WebformInterface $entity */
 
     $operations = [];

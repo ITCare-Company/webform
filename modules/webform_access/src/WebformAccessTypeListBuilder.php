@@ -2,6 +2,7 @@
 
 namespace Drupal\webform_access;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -114,8 +115,8 @@ class WebformAccessTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity, $type = 'edit') {
-    $operations = parent::getDefaultOperations($entity);
+  public function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
+    $operations = parent::getDefaultOperations($entity, $cacheability);
     if (isset($operations['delete'])) {
       $operations['delete']['attributes'] = WebformDialogHelper::getModalDialogAttributes(WebformDialogHelper::DIALOG_NARROW);
     }
