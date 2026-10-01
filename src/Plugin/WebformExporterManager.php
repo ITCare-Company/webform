@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\CategorizingPluginManagerTrait;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\webform\Attribute\WebformExporter as WebformExporterAttribute;
 
 /**
  * Manages results exporter plugins.
@@ -44,7 +45,7 @@ class WebformExporterManager extends DefaultPluginManager implements WebformExpo
    *   The configuration object factory.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_exporter, ConfigFactoryInterface $config_factory) {
-    parent::__construct('Plugin/WebformExporter', $namespaces, $module_exporter, 'Drupal\webform\Plugin\WebformExporterInterface', 'Drupal\webform\Annotation\WebformExporter');
+    parent::__construct('Plugin/WebformExporter', $namespaces, $module_exporter, 'Drupal\webform\Plugin\WebformExporterInterface', WebformExporterAttribute::class, 'Drupal\webform\Annotation\WebformExporter');
     $this->configFactory = $config_factory;
 
     $this->alterInfo('webform_exporter_info');

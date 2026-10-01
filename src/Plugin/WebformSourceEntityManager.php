@@ -8,6 +8,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\webform\Attribute\WebformSourceEntity as WebformSourceEntityAttribute;
 
 /**
  * Webform source entity plugin manager.
@@ -26,7 +27,7 @@ class WebformSourceEntityManager extends DefaultPluginManager implements Webform
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/WebformSourceEntity', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformSourceEntityInterface', 'Drupal\webform\Annotation\WebformSourceEntity');
+    parent::__construct('Plugin/WebformSourceEntity', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformSourceEntityInterface', WebformSourceEntityAttribute::class, 'Drupal\webform\Annotation\WebformSourceEntity');
     $this->alterInfo('webform_source_entity_info');
     $this->setCacheBackend($cache_backend, 'webform_source_entity_info_plugins');
   }

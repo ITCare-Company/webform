@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\CategorizingPluginManagerTrait;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\webform\Attribute\WebformHandler as WebformHandlerAttribute;
 
 /**
  * Manages webform handler plugins.
@@ -45,7 +46,7 @@ class WebformHandlerManager extends DefaultPluginManager implements WebformHandl
    *   The configuration object factory.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory) {
-    parent::__construct('Plugin/WebformHandler', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformHandlerInterface', 'Drupal\webform\Annotation\WebformHandler');
+    parent::__construct('Plugin/WebformHandler', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformHandlerInterface', WebformHandlerAttribute::class, 'Drupal\webform\Annotation\WebformHandler');
     $this->configFactory = $config_factory;
 
     $this->alterInfo('webform_handler_info');

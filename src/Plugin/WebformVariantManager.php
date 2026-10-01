@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\CategorizingPluginManagerTrait;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\webform\Attribute\WebformVariant as WebformVariantAttribute;
 
 /**
  * Manages webform variant plugins.
@@ -45,7 +46,7 @@ class WebformVariantManager extends DefaultPluginManager implements WebformVaria
    *   The configuration object factory.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory) {
-    parent::__construct('Plugin/WebformVariant', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformVariantInterface', 'Drupal\webform\Annotation\WebformVariant');
+    parent::__construct('Plugin/WebformVariant', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformVariantInterface', WebformVariantAttribute::class, 'Drupal\webform\Annotation\WebformVariant');
     $this->configFactory = $config_factory;
 
     $this->alterInfo('webform_variant_info');

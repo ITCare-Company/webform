@@ -11,6 +11,7 @@ use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\CategorizingPluginManagerTrait;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\webform\Attribute\WebformElement as WebformElementAttribute;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\WebformSubmissionForm;
@@ -74,7 +75,7 @@ class WebformElementManager extends DefaultPluginManager implements FallbackPlug
    *   The element info manager.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, ThemeHandlerInterface $theme_handler, ConfigFactoryInterface $config_factory, ElementInfoManagerInterface $element_info) {
-    parent::__construct('Plugin/WebformElement', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformElementInterface', 'Drupal\webform\Annotation\WebformElement');
+    parent::__construct('Plugin/WebformElement', $namespaces, $module_handler, 'Drupal\webform\Plugin\WebformElementInterface', WebformElementAttribute::class, 'Drupal\webform\Annotation\WebformElement');
     $this->configFactory = $config_factory;
     $this->elementInfo = $element_info;
     $this->themeHandler = $theme_handler;
