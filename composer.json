@@ -31,7 +31,7 @@
     }
   },
   "require": {
-    "drupal/core": "^10.3 || ^11.0"
+    "drupal/core": "^10.3 || ^11.0 || ^12@beta"
   },
   "require-dev": {
     "drupal/address": "^2.0",
