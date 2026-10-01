@@ -62,7 +62,7 @@ class WebformElement extends Plugin {
   public function __construct(
     public readonly string $id,
     public readonly string $api = '',
-    public readonly array $dependencies = [],
+    array $dependencies = [],
     public readonly ?TranslatableMarkup $label = NULL,
     public readonly string $default_key = '',
     public readonly TranslatableMarkup|string $category = '',
@@ -74,6 +74,15 @@ class WebformElement extends Plugin {
     public readonly bool $deprecated = FALSE,
     public readonly TranslatableMarkup|string $deprecated_message = '',
     public readonly ?string $deriver = NULL,
-  ) {}
+  ) {
+    // AttributeBase already declares a non-readonly $dependencies property
+    // (for the attribute class's own class/interface/provider dependencies);
+    // redeclaring it here as readonly fatals ("Cannot redeclare non-readonly
+    // property ... as readonly"). Use the inherited setter instead of
+    // promoting the parameter, so the 'dependencies' array key in the
+    // resulting plugin definition is unchanged for existing consumers
+    // (e.g. WebformElementManager reads $element_definition['dependencies']).
+    $this->setDependencies($dependencies);
+  }
 
 }
