@@ -244,7 +244,7 @@ trait WebformEntityReferenceWidgetTrait {
   /**
    * {@inheritdoc}
    */
-  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
     parent::massageFormValues($values, $form, $form_state);
 
     // Massage open/close dates.
