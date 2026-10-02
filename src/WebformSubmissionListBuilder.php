@@ -4,6 +4,7 @@ namespace Drupal\webform;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
@@ -1069,14 +1070,16 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity) {
+  public function getDefaultOperations(EntityInterface $entity, CacheableMetadata $cacheability) {
     /** @var \Drupal\webform\WebformInterface $webform */
     $webform = $entity->getWebform();
 
     $operations = [];
 
     if ($this->account) {
-      if ($entity->access('update')) {
+      $update_access = $entity->access('update', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($update_access);
+      if ($update_access->isAllowed()) {
         $operations['edit'] = [
           'title' => $this->t('Edit'),
           'weight' => 10,
@@ -1084,7 +1087,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('view')) {
+      $view_access = $entity->access('view', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($view_access);
+      if ($view_access->isAllowed()) {
         $operations['view'] = [
           'title' => $this->t('View'),
           'weight' => 20,
@@ -1092,7 +1097,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('duplicate') && $webform->getSetting('submission_user_duplicate')) {
+      $duplicate_access = $entity->access('duplicate', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($duplicate_access);
+      if ($duplicate_access->isAllowed() && $webform->getSetting('submission_user_duplicate')) {
         $operations['duplicate'] = [
           'title' => $this->t('Duplicate'),
           'weight' => 30,
@@ -1100,7 +1107,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('delete')) {
+      $delete_access = $entity->access('delete', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($delete_access);
+      if ($delete_access->isAllowed()) {
         $operations['delete'] = [
           'title' => $this->t('Delete'),
           'weight' => 100,
@@ -1110,7 +1119,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
       }
     }
     else {
-      if ($entity->access('update')) {
+      $update_access = $entity->access('update', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($update_access);
+      if ($update_access->isAllowed()) {
         $operations['edit'] = [
           'title' => $this->t('Edit'),
           'weight' => 10,
@@ -1118,7 +1129,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('view')) {
+      $view_access = $entity->access('view', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($view_access);
+      if ($view_access->isAllowed()) {
         $operations['view'] = [
           'title' => $this->t('View'),
           'weight' => 20,
@@ -1126,7 +1139,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('notes')) {
+      $notes_access = $entity->access('notes', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($notes_access);
+      if ($notes_access->isAllowed()) {
         $operations['notes'] = [
           'title' => $this->t('Notes'),
           'weight' => 30,
@@ -1134,14 +1149,18 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('resend') && $webform->hasMessageHandler()) {
+      $resend_access = $entity->access('resend', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($resend_access);
+      if ($resend_access->isAllowed() && $webform->hasMessageHandler()) {
         $operations['resend'] = [
           'title' => $this->t('Resend'),
           'weight' => 40,
           'url' => $this->requestHandler->getUrl($entity, $this->sourceEntity, 'webform_submission.resend_form'),
         ];
       }
-      if ($entity->access('duplicate')) {
+      $duplicate_access = $entity->access('duplicate', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($duplicate_access);
+      if ($duplicate_access->isAllowed()) {
         $operations['duplicate'] = [
           'title' => $this->t('Duplicate'),
           'weight' => 50,
@@ -1149,7 +1168,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('delete')) {
+      $delete_access = $entity->access('delete', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($delete_access);
+      if ($delete_access->isAllowed()) {
         $operations['delete'] = [
           'title' => $this->t('Delete'),
           'weight' => 100,
@@ -1158,7 +1179,9 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         ];
       }
 
-      if ($entity->access('view_any')
+      $view_any_access = $entity->access('view_any', return_as_object: TRUE);
+      $cacheability->addCacheableDependency($view_any_access);
+      if ($view_any_access->isAllowed()
         && $this->currentUser->hasPermission('access webform submission log')
         && $webform->hasSubmissionLog()
         && $this->moduleHandler->moduleExists('webform_submission_log')) {
