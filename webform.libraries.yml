@@ -468,8 +468,11 @@ webform.element.codemirror:
     component:
       css/webform.element.codemirror.css: {}
   js:
-    js/webform.element.codemirror.js: { weight: -1 }
+    js/webform.element.codemirror.js: {}
   dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
     - core/tabbable
 
 webform.element.codemirror.text:
