@@ -43,7 +43,7 @@ function webform_requirements($phase) {
           '@module_list' => implode(', ', $deprecated),
           ':url' => 'https://www.drupal.org/project/webform_deprecated',
         ]),
-        'severity' => REQUIREMENT_ERROR,
+        'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Error : REQUIREMENT_ERROR),
       ];
     }
   }
@@ -74,7 +74,7 @@ function webform_requirements($phase) {
         '%module_list' => implode(', ', $experimental),
         ':url' => 'https://www.drupal.org/core/experimental',
       ]),
-      'severity' => REQUIREMENT_WARNING,
+      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Warning : REQUIREMENT_WARNING),
     ];
   }
 
@@ -95,7 +95,7 @@ function webform_requirements($phase) {
     $requirements['webform_email'] = [
       'title' => t('Webform: HTML email support'),
       'value' => ($mail_module_name) ? t('Provided by the @module module.', $t_args) : t('Provided by the @plugin_id mail plugin.', $t_args),
-      'severity' => REQUIREMENT_OK,
+      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::OK : REQUIREMENT_OK),
     ];
     if ($mail_plugin_definition) {
       $requirements['webform_email']['description'] = (!empty($mail_plugin_definition['description']))
@@ -107,7 +107,7 @@ function webform_requirements($phase) {
     $requirements['webform_email'] = [
       'title' => t('Webform: HTML email support'),
       'value' => t('Unable to determine email module and/or provider'),
-      'severity' => REQUIREMENT_ERROR,
+      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Error : REQUIREMENT_ERROR),
     ];
   }
 
@@ -127,7 +127,7 @@ function webform_requirements($phase) {
       'title' => t('Webform: Private files'),
       'value' => t('Private file system is not set.'),
       'description' => t('This must be changed in <a href="https://www.drupal.org/documentation/modules/file">settings.php</a>. For more information see: <a href="https://www.drupal.org/psa-2016-003">DRUPAL-PSA-2016-003</a>'),
-      'severity' => REQUIREMENT_WARNING,
+      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Warning : REQUIREMENT_WARNING),
     ];
   }
 
@@ -156,7 +156,7 @@ function webform_requirements($phase) {
         'title' => t('Webform: Clientside validation'),
         'value' => t('Webform Clientside Validation module not installed.'),
         'description' => t('The Webform Clientside Validation module helps support Webform Clientside Validation integration. <a href=":href">Disable Webform Clientside Validation warning</a>', [':href' => Url::fromRoute('webform.config.advanced')->toString()]),
-        'severity' => REQUIREMENT_WARNING,
+        'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Warning : REQUIREMENT_WARNING),
       ];
     }
   }
@@ -183,7 +183,7 @@ function webform_requirements($phase) {
       'title' => t('Webform: jQuery UI Datepicker'),
       'value' => t('Webform jQuery UI Datepicker module not installed.'),
       'description' => t('The Webform jQuery UI Datepicker module is required to support datepickers. Disable this datepicker warning by <a href=":href">removing #datepicker property from all webforms</a>.', $t_args),
-      'severity' => REQUIREMENT_WARNING,
+      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Warning : REQUIREMENT_WARNING),
     ];
   }
 
@@ -267,7 +267,7 @@ function webform_requirements($phase) {
         'title' => t('Webform: Spam protection'),
         'value' => t('Webform <a href=":href">Spam protection module</a> missing. Please install one of the below modules.', [':href' => 'https://www.drupal.org/node/206787']),
         'description' => \Drupal::service('renderer')->renderInIsolation($available_projects),
-        'severity' => REQUIREMENT_WARNING,
+        'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Warning : REQUIREMENT_WARNING),
       ];
     }
   }

@@ -9,6 +9,7 @@ use Drupal\webform\Element\WebformMessage;
 use Drupal\webform\WebformSubmissionForm;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Hook\Order\Order;
 
 /**
  * Hook implementations for webform.
@@ -19,7 +20,7 @@ class WebformFormAlterHooks {
   /**
    * Implements hook_form_alter().
    */
-  #[Hook('form_alter')]
+  #[Hook('form_alter', order: Order::Last)]
   public function formAlter(&$form, FormStateInterface $form_state, $form_id) {
     switch ($form_id) {
       case 'user_admin_permissions':

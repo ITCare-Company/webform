@@ -11,7 +11,6 @@ use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\Core\Hook\Attribute\LegacyModuleImplementsAlter;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -136,8 +135,18 @@ function webform_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableD
 
 /**
  * Implements hook_module_implements_alter().
+ *
+ * D12: never invoked by core's compile-time hook-ordering system (core 12
+ * removed the runtime hook_module_implements_alter() call entirely -- see
+ * CR#3496788). Left in place as inert dead code for pre-11.2 BC rather than
+ * deleted outright; the #[LegacyModuleImplementsAlter] attribute that used to
+ * sit here referenced a class that does not exist in this core 12.0.0-beta1
+ * checkout, which is a fatal `Attribute class ... not found` during hook
+ * collection (IS_INSTANCEOF attribute filtering requires the class to
+ * resolve) -- removed. The actual reordering (webform's own hook_form_alter()
+ * running last) is now done via #[Hook('form_alter', order: Order::Last)] on
+ * \Drupal\webform\Hook\WebformFormAlterHooks::formAlter().
  */
-#[LegacyModuleImplementsAlter]
 function webform_module_implements_alter(&$implementations, $hook) {
   if ($hook === 'form_alter') {
     $implementation = $implementations['webform'];
